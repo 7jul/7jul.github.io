@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教学工作总结提示词生成器</title>
+    <link rel="stylesheet" href="class_advisor_styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>教学工作总结提示词生成器</h1>
+        <form id="summaryForm">
+            <label for="semester">学期选择：</label>
+            <input type="text" id="semester" placeholder="例如：2024-2025学年第一学期">
+
+            <label for="subject">教学科目：</label>
+            <input type="text" id="subject" placeholder="例如：小学五年级语文兼班主任">
+
+            <div class="form-column">
+                <label for="ethics">师德表现：</label>
+                <textarea id="ethics" rows="4" placeholder="如：具有高度的政治认同与师德修养等"></textarea>
+
+                <label for="discipline">遵章守纪：</label>
+                <textarea id="discipline" rows="3" placeholder="包含：日常出勤，工作完成状况，上课情况等"></textarea>
+
+                <label for="tasks">教学任务完成情况：</label>
+                <textarea id="tasks" rows="3" placeholder="包含：教学计划执行，备课质量，作业批改情况等"></textarea>
+            </div>
+
+            <div class="form-column">
+                <label for="achievements">教学成果：</label>
+                <textarea id="achievements" rows="3" placeholder="包含：学生成绩，竞赛指导获奖，公开课，论文或其他教学成果获奖。"></textarea>
+
+                <label for="training">研修情况：</label>
+                <textarea id="training" rows="3" placeholder="包含：教研活动，参加各类培训等"></textarea>
+
+                <label for="improvement">不足及努力方向：</label>
+                <textarea id="improvement" rows="3" placeholder="自拟"></textarea>
+            </div>
+            <p style="text-align: center;">
+            <button type="button" id="generateBtn">生成提示词</button>
+            </p>
+        </form>
+
+        <div id="promptResult" class="result-area"></div>
+
+        <div class="copyright">
+            @天津市南开区南开小学-7jul
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            let prompt = '请根据以下教学要素生成详细的工作总结：\n';
+            
+            const elements = {
+                semester: document.getElementById('semester').value,
+                subject: document.getElementById('subject').value,
+                ethics: document.getElementById('ethics').value,
+                discipline: document.getElementById('discipline').value,
+                tasks: document.getElementById('tasks').value,
+                achievements: document.getElementById('achievements').value,
+                training: document.getElementById('training').value,
+                improvement: document.getElementById('improvement').value
+            };
+
+            // 构建提示词模板
+            prompt += `学期：${elements.semester}\n`;
+            prompt += `学科：${elements.subject}\n\n`;
+            prompt += '要求包含以下内容：\n';
+            prompt += '1. 师德师风建设成效（附具体事例）\n';
+            prompt += '2. 教学常规执行情况（量化数据说明）\n';
+            prompt += '3. 教学成果总结（含竞赛指导成果）\n';
+            prompt += '4. 专业发展研修成果\n';
+            prompt += '5. 现存不足分析（分点说明）\n';
+            prompt += '6. 具体改进措施（需可量化）\n\n';
+            prompt += '请使用以下结构：\n';
+            prompt += '一、教学工作总体情况\n';
+            prompt += '二、主要工作成效（分点说明，至少包含3个方面）\n';
+            prompt += '三、存在问题分析（结合具体事例）\n';
+            prompt += '四、未来改进方向\n\n';
+            prompt += '文字要求：\n';
+            prompt += '• 使用专业术语但避免生硬\n';
+            prompt += '• 数据支撑的实证分析\n';
+            prompt += '• 突出教学特色与创新点';
+
+            // 显示结果并滚动
+            const resultDiv = document.getElementById('promptResult');
+            resultDiv.innerHTML = `<pre>${prompt}</pre>`;
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
