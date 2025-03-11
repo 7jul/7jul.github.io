@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>领导班子述职提示词生成器</title>
+    <link rel="stylesheet" href="class_advisor_styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>领导班子述职提示词生成器</h1>
+        <form id="reportForm">
+            <label for="term">任职期限：</label>
+            <input type="text" id="term" placeholder="例如：2021-2024年任期">
+
+            <label for="position">现任职务：</label>
+            <input type="text" id="position" placeholder="例如：党支部书记兼校长">
+
+            <label for="goals">任期目标：</label>
+            <textarea id="goals" rows="3" placeholder="包含：
+• 学校发展规划目标
+• 教育教学改革目标
+• 师资建设目标"></textarea>
+
+            <label for="achievements">工作成效：</label>
+            <textarea id="achievements" rows="3" placeholder="包含：
+• 重大改革举措
+• 特色办学成果
+• 荣誉奖项"></textarea>
+
+            <label for="teamwork">团队建设：</label>
+            <textarea id="teamwork" rows="3" placeholder="包含：
+• 班子分工协作机制
+• 民主决策实践
+• 干部培养举措"></textarea>
+
+            <button type="button" id="generateBtn">生成提示词</button>
+        </form>
+
+        <div id="promptResult" class="result-area"></div>
+        <div class="copyright">
+            @天津市南开区南开小学
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            let prompt = '请根据以下要素撰写领导班子述职报告：\n';
+            
+            const elements = {
+                term: document.getElementById('term').value,
+                position: document.getElementById('position').value,
+                goals: document.getElementById('goals').value,
+                achievements: document.getElementById('achievements').value,
+                teamwork: document.getElementById('teamwork').value
+            };
+
+            prompt += `任期：${elements.term}\n`;
+            prompt += `职务：${elements.position}\n\n`;
+            prompt += '报告要求：\n';
+            prompt += '1. 履职情况概述（突出党建引领作用）\n';
+            prompt += '2. 重点工作完成情况（数据量化说明）\n';
+            prompt += '3. 党风廉政建设情况\n';
+            prompt += '4. 存在不足与改进方向\n\n';
+            prompt += '结构框架：\n';
+            prompt += '一、思想政治建设\n';
+            prompt += '二、履职尽责情况\n';
+            prompt += '三、廉洁自律情况\n';
+            prompt += '四、未来工作展望\n\n';
+            prompt += '文字要求：\n';
+            prompt += '• 突出班子集体决策作用\n';
+            prompt += '• 体现民主管理理念\n';
+            prompt += '• 包含具体案例支撑';
+
+            const resultDiv = document.getElementById('promptResult');
+            resultDiv.innerHTML = `<pre>${prompt}</pre>`;
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
