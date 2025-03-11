@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>班级评语生成提示词助手</title>
+    <link rel="stylesheet" href="class_advisor_styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>班级评语生成提示词助手</h1>
+        <form id="commentForm">
+            <div class="form-group">
+                <label for="totalStudents">班级总人数：</label>
+                <input type="number" id="totalStudents" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="excellent">学优生人数：</label>
+                <input type="number" id="excellent" min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label for="struggling">学困生人数：</label>
+                <input type="number" id="struggling" min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label for="specialty">特长生构成：</label>
+                <textarea id="specialty" placeholder="格式示例：美术2人、编程1人" rows="3"></textarea>
+            </div>
+
+            <button type="submit" class="primary-btn">生成提示词</button>
+        </form>
+
+        <div class="result" id="promptResult">
+            <h3>生成的提示词：</h3>
+            <textarea id="promptOutput" readonly></textarea>
+            <button onclick="location.reload()" class="secondary-btn">重新填写</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('commentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const total = parseInt(document.getElementById('totalStudents').value);
+            const excellent = parseInt(document.getElementById('excellent').value);
+            const struggling = parseInt(document.getElementById('struggling').value);
+            const specialty = document.getElementById('specialty').value.replace(/，/g, "、");
+
+            if (excellent + struggling > total) {
+                alert('学优生和学困生总数不能超过班级总人数');
+                return;
+            }
+
+            const prompt = `根据以下班级数据生成评语：\n\n`
+                + `1. 班级总人数：${total}人\n`
+                + `2. 学优生：${excellent}人\n`
+                + `3. 学困生：${struggling}人\n`
+                + `4. 特长生构成：${specialty || '无'}`;
+
+            document.getElementById('promptOutput').value = prompt;
+            document.getElementById('promptResult').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
