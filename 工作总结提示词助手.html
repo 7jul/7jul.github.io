@@ -36,6 +36,9 @@
 
                 <label for="improvement">不足及努力方向：</label>
                 <textarea id="improvement" rows="3" placeholder="自拟"></textarea>
+
+                <label for="wordCount">字数要求（选填）：</label>
+                <input type="text" id="wordCount" placeholder="例如：建议不少于 1000 字，不超过 2000 字">
             </div>
             <p style="text-align: center;">
             <button type="button" id="generateBtn">生成提示词</button>
@@ -51,7 +54,7 @@
 
     <script>
         document.getElementById('generateBtn').addEventListener('click', function() {
-            let prompt = '请根据以下教学要素生成详细的工作总结：\n';
+            let prompt = '你是一位教师，请根据以下教学要素生成一份工作总结：\n';
             
             const elements = {
                 semester: document.getElementById('semester').value,
@@ -61,28 +64,43 @@
                 tasks: document.getElementById('tasks').value,
                 achievements: document.getElementById('achievements').value,
                 training: document.getElementById('training').value,
-                improvement: document.getElementById('improvement').value
+                improvement: document.getElementById('improvement').value,
+                wordCount: document.getElementById('wordCount').value
             };
 
-            // 构建提示词模板
-            prompt += `学期：${elements.semester}\n`;
-            prompt += `学科：${elements.subject}\n\n`;
-            prompt += '要求包含以下内容：\n';
-            prompt += '1. 师德师风建设成效（附具体事例）\n';
-            prompt += '2. 教学常规执行情况（量化数据说明）\n';
-            prompt += '3. 教学成果总结（含竞赛指导成果）\n';
-            prompt += '4. 专业发展研修成果\n';
-            prompt += '5. 现存不足分析（分点说明）\n';
-            prompt += '6. 具体改进措施（需可量化）\n\n';
-            prompt += '请使用以下结构：\n';
-            prompt += '一、教学工作总体情况\n';
-            prompt += '二、主要工作成效（分点说明，至少包含3个方面）\n';
-            prompt += '三、存在问题分析（结合具体事例）\n';
-            prompt += '四、未来改进方向\n\n';
-            prompt += '文字要求：\n';
-            prompt += '• 使用专业术语但避免生硬\n';
-            prompt += '• 数据支撑的实证分析\n';
-            prompt += '• 突出教学特色与创新点';
+            // 构建动态提示词模板
+            prompt += `学期：${elements.semester}\n学科：${elements.subject}\n\n`;
+            
+            // 动态添加输入项内容
+            const fields = [
+                {title: '师德表现', content: elements.ethics},
+                {title: '遵章守纪', content: elements.discipline},
+                {title: '教学任务', content: elements.tasks},
+                {title: '教学成果', content: elements.achievements},
+                {title: '研修情况', content: elements.training},
+                {title: '改进方向', content: elements.improvement}
+            ];
+
+            fields.forEach(field => {
+                if (field.content) {
+                    prompt += `【${field.title}】\n${field.content}\n\n`;
+                }
+            });
+
+            // 添加结构要求
+            prompt += '请使用以下结构撰写：\n';
+            prompt += '一、师德师风表现\n';
+            prompt += '二、日常教学工作\n';
+            prompt += '三、教科研及研修情况\n';
+            prompt += '四、未来提升计划（针对不足及改进方向制定）\n\n';
+            
+            // 文字规范
+            prompt += '文字规范要求：\n';
+            prompt += '突出个性化教学特色\n突出教学成果\n突出成绩\n文字精炼流畅\n';
+            
+            if (elements.wordCount) {
+                prompt += `字数要求：${elements.wordCount}`;
+            }
 
             // 显示结果并滚动
             const resultDiv = document.getElementById('promptResult');
