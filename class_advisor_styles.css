@@ -33,7 +33,10 @@ textarea {
     margin-top: 5px;
     border: 1px solid #ddd;
     border-radius: 4px;
+<<<<<<< HEAD
     resize: vertical;
+=======
+>>>>>>> e06ec3813f56e7da07c279f4459b21de9445147f
 }
 
 /* 按钮样式 */
@@ -96,6 +99,7 @@ button:hover {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+<<<<<<< HEAD
 }
 
 textarea {
@@ -2954,4 +2958,6 @@ textarea {
     text-align: center;
     padding: 20px;
     background-color: #fff;
+=======
+>>>>>>> e06ec3813f56e7da07c279f4459b21de9445147f
 }
