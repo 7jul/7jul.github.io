@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学科组长教科研计划提示词生成器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>学科组长教科研计划提示词生成器</h1>
+        <form id="researchPlanForm">
+            <label for="semester">学期选择：</label>
+            <input type="text" id="semester" placeholder="例如：2023-2024学年第一学期">
+
+            <label for="subject">学科名称：</label>
+            <input type="text" id="subject" placeholder="例如：初中数学组">
+
+            <label for="currentStatus">当前教研状况：</label>
+            <textarea id="currentStatus" rows="3"></textarea>
+
+            <label for="strengths">优势分析：</label>
+            <textarea id="strengths" rows="3"></textarea>
+
+            <label for="weaknesses">存在问题：</label>
+            <textarea id="weaknesses" rows="3"></textarea>
+
+            <label for="goal1">工作目标一（请用方法+目标表述）：</label>
+            <textarea id="goal1" rows="3"></textarea>
+
+            <label for="goal2">工作目标二：</label>
+            <textarea id="goal2" rows="3"></textarea>
+
+            <label for="goal3">工作目标三：</label>
+            <textarea id="goal3" rows="3"></textarea>
+
+            <label for="schoolTasks">本学期校级教研任务（如公开课、课题研究等）：</label>
+            <textarea id="schoolTasks" rows="4"></textarea>
+
+            <button type="submit">生成提示词</button>
+        </form>
+
+        <div class="result" id="promptResult">
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('researchPlanForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const semester = document.getElementById('semester').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const currentStatus = document.getElementById('currentStatus').value.trim();
+            const strengths = document.getElementById('strengths').value.trim();
+            const weaknesses = document.getElementById('weaknesses').value.trim();
+            const goal1 = document.getElementById('goal1').value.trim();
+            const goal2 = document.getElementById('goal2').value.trim();
+            const goal3 = document.getElementById('goal3').value.trim();
+            const schoolTasks = document.getElementById('schoolTasks').value.trim();
+
+            let prompt = '';
+            
+            if (semester) prompt += `学期：${semester}\n\n`;
+            if (subject) prompt += `学科组：${subject}\n\n`;
+
+            if (currentStatus) prompt += `当前教研状况:\n${currentStatus}\n\n`;
+            if (strengths) prompt += `优势分析:\n${strengths}\n\n`;
+            if (weaknesses) prompt += `存在问题:\n${weaknesses}\n\n`;
+
+            const goals = [];
+            if (goal1) goals.push(`一、${goal1}`);
+            if (goal2) goals.push(`二、${goal2}`);
+            if (goal3) goals.push(`三、${goal3}`);
+            
+            prompt += `工作目标:\n${goals.join('\n')}\n\n`;
+
+            if (schoolTasks) prompt += `校级教研任务:\n${schoolTasks}\n\n`;
+
+            // 固定要求
+            prompt += `请根据以上信息生成学科组长教科研计划，内容需包含：\n` +
+                      `- 教研目标分解与实施路径\n- 重点课题研究方案\n- 新教师培养机制\n` +
+                      `- 跨年级教学衔接措施\n- 教学成果预期（如论文/公开课等）\n` +
+                      `要求结构清晰，具有可操作性，体现创新性和学科特色。\n`;
+
+            document.getElementById('promptResult').innerHTML = `<pre>${prompt}</pre>`;
+        });
+    </script>
+</body>
+</html>

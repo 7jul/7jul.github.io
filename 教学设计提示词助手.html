@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教学设计提示词生成器</title>
+    <link rel="stylesheet" href="class_advisor_styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>教学设计提示词生成器</h1>
+        <form id="teachingDesignForm">
+            <label for="grade">教学年级：</label>
+            <input type="text" id="grade" placeholder="例如：小学五年级">
+
+            <label for="subject">学科名称：</label>
+            <input type="text" id="subject" placeholder="例如：语文">
+
+            <label for="topic">教学主题：</label>
+            <textarea id="topic" rows="2" placeholder="例如：古诗鉴赏《静夜思》"></textarea>
+
+            <label for="objectives">教学目标：</label>
+            <textarea id="objectives" rows="3" placeholder="包含：
+• 知识与技能目标
+• 过程与方法目标
+• 情感态度价值观目标"></textarea>
+
+            <label for="content">教学内容：</label>
+            <textarea id="content" rows="3" placeholder="包含：
+• 重点难点分析
+• 知识结构框架
+• 教学资源准备"></textarea>
+
+            <button type="button" id="generateBtn">生成提示词</button>
+        </form>
+
+        <div id="promptResult" class="result-area"></div>
+        <div class="copyright">
+            @天津市南开区南开小学
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            let prompt = '请根据以下要素设计详细的教学方案：\n';
+            
+            const elements = {
+                grade: document.getElementById('grade').value,
+                subject: document.getElementById('subject').value,
+                topic: document.getElementById('topic').value,
+                objectives: document.getElementById('objectives').value,
+                content: document.getElementById('content').value
+            };
+
+            prompt += `年级：${elements.grade}\n`;
+            prompt += `学科：${elements.subject}\n`;
+            prompt += `主题：${elements.topic}\n\n`;
+            prompt += '设计要求：\n';
+            prompt += '1. 教学目标设定（需符合SMART原则）\n';
+            prompt += '2. 教学流程设计（包含导入/讲授/练习/总结环节）\n';
+            prompt += '3. 差异化教学策略（针对不同学习水平学生）\n';
+            prompt += '4. 课堂评价方案（包含形成性评价与终结性评价）\n\n';
+            prompt += '请使用以下结构：\n';
+            prompt += '一、教材分析\n';
+            prompt += '二、学情分析\n';
+            prompt += '三、教学过程设计（分课时详细说明）\n';
+            prompt += '四、板书设计\n\n';
+            prompt += '文字要求：\n';
+            prompt += '• 体现新课标核心素养\n';
+            prompt += '• 包含至少3种教学方法\n';
+            prompt += '• 突出信息技术与学科融合';
+
+            const resultDiv = document.getElementById('promptResult');
+            resultDiv.innerHTML = `<pre>${prompt}</pre>`;
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
