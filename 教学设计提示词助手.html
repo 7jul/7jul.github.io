@@ -10,65 +10,104 @@
     <div class="container">
         <h1>教学设计提示词生成器</h1>
         <form id="teachingDesignForm">
-            <label for="grade">教学年级：</label>
+            <label for="grade">任教年级：</label>
             <input type="text" id="grade" placeholder="例如：小学五年级">
 
-            <label for="subject">学科名称：</label>
+            <label for="subject">学科：</label>
             <input type="text" id="subject" placeholder="例如：语文">
 
-            <label for="topic">教学主题：</label>
-            <textarea id="topic" rows="2" placeholder="例如：古诗鉴赏《静夜思》"></textarea>
+            <label for="textbookVersion">教材版本：</label>
+            <input type="text" id="textbookVersion" placeholder="例如：人教版统编教材">
+
+            <label for="topic">课题：</label>
+            <textarea id="topic" rows="2" placeholder="例如：第一课：古诗三首"></textarea>
 
             <label for="objectives">教学目标：</label>
-            <textarea id="objectives" rows="3" placeholder="包含：
-• 知识与技能目标
-• 过程与方法目标
-• 情感态度价值观目标"></textarea>
+            <textarea id="objectives" rows="3" placeholder="请务必分条目表述清楚便于AI进行分析编写教学设计。"></textarea>
 
-            <label for="content">教学内容：</label>
-            <textarea id="content" rows="3" placeholder="包含：
-• 重点难点分析
-• 知识结构框架
-• 教学资源准备"></textarea>
+            <label for="reviewAndIntroduction">复习和新课导入：</label>
+            <textarea id="reviewAndIntroduction" rows="2" placeholder="包含：复习内容设计，新课导入方式"></textarea>
+
+            <label for="mainTeaching">主要教学环节：</label>
+            <textarea id="mainTeaching" rows="3" placeholder="建议分条目说明教学活动安排，如：分组讨论，分角色朗读，情景表演等"></textarea>
+
+            <label for="summary">课堂小结：</label>
+            <textarea id="summary" rows="2"></textarea>
+
+            <label for="homework">作业设计：</label>
+            <textarea id="homework" rows="2" placeholder="作业设计"></textarea>
 
             <button type="button" id="generateBtn">生成提示词</button>
         </form>
 
-        <div id="promptResult" class="result-area"></div>
+        <style>
+        /* 新增结果框样式 */
+        .result-area {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 20px 0;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            white-space: pre-wrap; /* 自动换行 */
+            word-break: break-all; /* 长单词强制换行 */
+        }
+
+        /* 保持原有表单样式 */
+        .form-control {
+            /* ... 原有样式不变 ... */
+        }
+        </style>
+
+        <div id="promptResult" class="result-area">
+            <!-- 提示词生成结果会显示在这里 -->
+        </div>
         <div class="copyright">
-            @天津市南开区南开小学
+            @天津市南开区南开小学-7jul
         </div>
     </div>
 
     <script>
         document.getElementById('generateBtn').addEventListener('click', function() {
-            let prompt = '请根据以下要素设计详细的教学方案：\n';
+            let prompt = '你是一位资深教师，请根据以下要素设计详细的教案：\n';
             
             const elements = {
                 grade: document.getElementById('grade').value,
                 subject: document.getElementById('subject').value,
+                textbookVersion: document.getElementById('textbookVersion').value,
                 topic: document.getElementById('topic').value,
                 objectives: document.getElementById('objectives').value,
-                content: document.getElementById('content').value
+                reviewAndIntroduction: document.getElementById('reviewAndIntroduction').value,
+                mainTeaching: document.getElementById('mainTeaching').value,
+                summary: document.getElementById('summary').value,
+                homework: document.getElementById('homework').value
             };
 
+            // 新增基本信息输出
             prompt += `年级：${elements.grade}\n`;
             prompt += `学科：${elements.subject}\n`;
+            prompt += `教材版本：${elements.textbookVersion}\n`;
             prompt += `主题：${elements.topic}\n\n`;
-            prompt += '设计要求：\n';
-            prompt += '1. 教学目标设定（需符合SMART原则）\n';
-            prompt += '2. 教学流程设计（包含导入/讲授/练习/总结环节）\n';
-            prompt += '3. 差异化教学策略（针对不同学习水平学生）\n';
-            prompt += '4. 课堂评价方案（包含形成性评价与终结性评价）\n\n';
-            prompt += '请使用以下结构：\n';
+            
+            // 结构化输出用户输入内容
             prompt += '一、教材分析\n';
             prompt += '二、学情分析\n';
-            prompt += '三、教学过程设计（分课时详细说明）\n';
-            prompt += '四、板书设计\n\n';
-            prompt += '文字要求：\n';
+            prompt += `三、教学目标\n${elements.objectives}\n\n`;
+            prompt += '四、教学重难点\n';
+            prompt += '五、教学过程：\n';
+            prompt += `1. 复习导入新课：\n${elements.reviewAndIntroduction}\n\n`;
+            prompt += `2. 主要教学环节：\n${elements.mainTeaching}\n\n`; 
+            prompt += `3. 课堂小结：\n${elements.summary}\n\n`;
+            prompt += `4. 作业设计：\n${elements.homework}\n\n`;
+            prompt += '六、板书设计\n\n';
+            
+            // 保持原有设计要求
+            prompt += '教学设计要求：\n';
             prompt += '• 体现新课标核心素养\n';
-            prompt += '• 包含至少3种教学方法\n';
-            prompt += '• 突出信息技术与学科融合';
+            prompt += '• 包含多种教学方法\n';
+            prompt += '• 以学生为中心，注重学法指导';
+            prompt += '教学设计文字要求：\n';
+            prompt += '• 教案尽可能详细，包含必要的教师语言\n';
+            prompt += '• 对学生的回答做一些预设\n';
 
             const resultDiv = document.getElementById('promptResult');
             resultDiv.innerHTML = `<pre>${prompt}</pre>`;

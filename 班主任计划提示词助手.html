@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- 头部引用更新 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>班主任工作计划提示词生成器</title>
     <link rel="stylesheet" href="class_advisor_styles.css">
 </head>
+
+
 <body>
     <div class="container">
         <h1>班主任工作计划提示词生成器</h1>
@@ -42,11 +45,10 @@
             <p style="text-align: center;">
             <button type="submit">生成提示词</button>
             </p>
-        </form>
-
-        <div class="result" id="promptResult">
+            <div id="promptResult">
             <!-- 提示词生成结果会显示在这里 -->
-        </div>
+            </div>
+        </form>
     </div>
 
     <script>
@@ -103,14 +105,14 @@
             }
 
             // 添加固定要求
-            prompt += `你是一个中小学班主任，请根据上述信息，生成一份详细且精准的班主任工作计划。\n内容需涵盖学生管理、班级目标等多个方面。\n确保计划具有可行性、针对性和创新性，能有效指导班主任本学期的工作。\n在文末强调，关注学生心理健康，加强日常安全教育。\n尽量用陈述式的语言，除班级目标外，不要多层级表示。\n`;
+            prompt += `你是一个中小学班主任，请根据上述信息，生成一份详细且精准的班主任工作计划。内容需涵盖学生管理、班级目标等多个方面。确保计划具有可行性、针对性和创新性，能有效指导班主任本学期的工作。在文末强调，关注学生心理健康，加强日常安全教育。\n尽量用陈述式的语言，除班级目标外，不要多层级表示。\n`;
 
             if (wordCount) {
                 prompt += `计划书字数要求: ${wordCount}\n\n`;
             }
 
             // 显示结果
-            document.getElementById('promptResult').innerHTML = `<pre>${prompt}</pre>`;
+            document.getElementById('promptResult').innerHTML = `<pre class="result-area">${prompt}</pre>`;
             
             // 新增：自动滚动到结果区域
             document.getElementById('promptResult').scrollIntoView({
@@ -118,7 +120,7 @@
             });
         });
     </script>
-    <center><div id="center-text">
+    <center><div class="copyright">
         @天津市南开区南开小学-7jul
     </div></center>
 </body>

@@ -44,7 +44,7 @@
             </p>
         </form>
 
-        <div class="result" id="promptResult">
+        <div id="promptResult">
         </div>
     </div>
 
@@ -92,9 +92,12 @@
                 prompt += `字数要求：${wordCount}\n`;
             }
 
-            document.getElementById('promptResult').innerHTML = `<pre>${prompt}</pre>`;
+            document.getElementById('promptResult').innerHTML = `<pre class="result-area">${prompt}</pre>`;
             document.getElementById('promptResult').scrollIntoView({ behavior: 'smooth' });
         });
     </script>
+        <center><div class="copyright">
+            @天津市南开区南开小学-7jul
+        </div></center>
 </body>
 </html>

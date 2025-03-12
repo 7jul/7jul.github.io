@@ -41,19 +41,60 @@
 <body>
     <div class="container">
         <img src="school.png" alt="校徽" class="logo">
-        <h1 style="text-align: center; color: #2c3e50;">提示词助手导航</h1>
+        <h1 style="text-align: center; color: #2c3e50;">提示词生成助手</h1>
+    
+        <!-- 新增使用说明 -->
+        <div class="usage-instructions">
+            请按表单要求填写必要信息，点击生成提示词按钮，将生成的提示词复制粘贴到具有思考能力的AI网站（如Kimi，豆包，deepseek等）便可生成符合自己要求的文档了。：）
+        </div>
+
         <ul class="nav-list">
-            <li><a href="班主任计划提示词助手.html">班主任工作计划助手</a></li>
-            <li><a href="工作总结提示词助手.html">工作总结助手</a></li>
-            <li><a href="教学设计提示词助手.html">教学设计助手</a></li>
-            <li><a href="教科研计划提示词助手.html">教科研计划助手</a></li>
+            <li><a href="班主任计划提示词助手.html">班主任工作计划助手(beta!)</a></li>
+            <li><a href="工作总结提示词助手.html">工作总结助手(beta!)</a></li>
+            <li><a href="教学设计提示词助手.html">教学设计助手(beta!)</a></li>
+            <li><a href="教科研计划提示词助手.html">教科研计划助手(beta!)</a></li>
             <li><a href="评语生成提示词助手.html">学生评语助手</a></li>
             <li><a href="课前修改提示词助手.html">教案课前修改助手</a></li>
-            <li><a href="领导班子述职提示词助手.html">行政述职助手</a></li>
+            <li><a href="干部述职提示词助手.html">行政述职助手</a></li>
         </ul>
     </div>
-    <div class="footer">
+    <div class="copyright">
         @天津市南开区南开小学-7jul
     </div>
 </body>
 </html>
+
+<style>
+/* 新增使用说明样式 */
+.usage-instructions {
+    text-align: center;
+    color: #666;
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    font-size: 0.95em;
+}
+
+/* 保持原有.nav-list样式不变 */
+.nav-list li {
+    margin: 15px 0;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+.nav-list li:hover {
+    transform: translateX(10px);
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    background: #fff;
+    border-top: 1px solid #eee;
+}
+</style>
