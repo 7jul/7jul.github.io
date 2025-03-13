@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教学反思助手</title>
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .design-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .line-numbers {
+            width: 40px;
+            padding: 10px 5px 10px 10px;  /* 调整padding，使数字更靠近输入框 */
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            text-align: right;
+            font-family: monospace;
+            overflow:hidden;
+            min-height: 1000px;
+            font-size: 16px;  /* 添加字体大小 */
+            line-height: 1.5;  /* 添加行高，与输入框一致 */
+        }
+        #designInput {
+            width: calc(100% - 40px);
+            height: auto;  
+            min-height: 1000px;  
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-family: monospace;
+            line-height: 1.5;  /* 确保与行号区域一致 */
+            font-size: 16px;  /* 确保与行号区域一致 */
+            resize: vertical;
+            overflow: hidden;  
+        }
+        .basic-info {
+            margin-bottom: 20px;
+        }
+        .basic-info input {
+            width: 300px;
+            margin-right: 10px;
+            padding: 5px;
+        }
+        .reflection-section {
+            margin-bottom: 20px;
+        }
+        .reflection-section textarea {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+            resize: vertical;
+        }
+        .reflection-section input {
+            width: 100px;
+            margin-left: 10px;
+        }
+        .primary-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .result-area {
+          width: 97%;
+          word-wrap: break-word;
+          text-size-adjust: 100%;
+          display: inline-block;
+          word-wrap: break-word;
+          hyphens: auto;
+          background: #f8f9fa;
+          border: 1px solid #dee2e6;
+          border-radius: 4px;
+          padding: 1rem;
+          margin-top: 2rem;
+          white-space: pre-wrap;
+          }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>教学反思助手</h1>
+        
+        <!-- 教学设计输入 -->
+        <div class="design-container">
+            <div class="line-numbers" id="lineNumbers"></div>
+            <textarea id="designInput" placeholder="请输入您的教学设计..."></textarea>
+        </div>
+
+        <!-- 基本信息 -->
+        <div class="basic-info">
+            <h3>授课基本信息：</h3>
+            <input type="text" id="textbookVersion" placeholder="教材版本">
+            <input type="text" id="gradeLevel" placeholder="年级">
+            <input type="text" id="lessonTitle" placeholder="课题">
+        </div>
+
+        <!-- 反思内容 -->
+        <div class="reflection-section">
+            <h3>目标落实</h3>
+            <textarea placeholder="描述目标落实情况..."></textarea>
+            <input type="text" placeholder="引用行号（如1-3）">
+        </div>
+        
+        <div class="reflection-section">
+            <h3>教学环节设计</h3>
+            <textarea placeholder="描述教学环节设计..."></textarea>
+            <input type="text" placeholder="引用行号（如4-6）">
+        </div>
+
+        <div class="reflection-section">
+            <h3>学生预设与生成</h3>
+            <textarea placeholder="描述学生预设与生成情况..."></textarea>
+            <input type="text" placeholder="引用行号（如7-9）">
+        </div>
+
+        <div class="reflection-section">
+            <h3>课堂评价运用</h3>
+            <textarea placeholder="描述课堂评价运用..."></textarea>
+            <input type="text" placeholder="引用行号（如10-12）">
+        </div>
+
+        <button class="primary-btn" onclick="generatePrompt()">生成反思提示</button>
+        <h3>生成的反思提示：</h3>
+        <div id="promptOutput" class="result-area">
+            <div class="result-item">
+                <div class="result-title">授课基本信息</div>
+                <div class="result-content" id="basicInfo"></div>
+            </div>
+            <div class="result-item">
+                <div class="result-title">教学反思内容</div>
+                <div class="result-content" id="reflectionContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 自动生成行号
+        const designInput = document.getElementById('designInput');
+        const lineNumbers = document.getElementById('lineNumbers');
+
+        // 自动调整高度
+        designInput.addEventListener('input', () => {
+            // 自动生成行号
+            const lines = designInput.value.split('\n').length;
+            let numbers = '';
+            // 增加10行冗余行号
+            for (let i = 1; i <= lines + 10; i++) {
+                numbers += i + '\n';
+            }
+            lineNumbers.innerText = numbers;
+            lineNumbers.style.height = designInput.scrollHeight + 'px';  // 同步高度
+
+            // 自动调整高度
+            designInput.style.height = 'auto';
+            designInput.style.height = (designInput.scrollHeight) + 'px';
+        });
+
+        // 初始化时显示10行行号
+        lineNumbers.innerText = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n';
+        // 生成提示词
+        function generatePrompt() {
+            const version = document.getElementById('textbookVersion').value;
+            const grade = document.getElementById('gradeLevel').value;
+            const title = document.getElementById('lessonTitle').value;
+            
+            // 基本信息部分
+            let promptContent = `授课基本信息：
+教材版本：${version}
+年级：${grade}
+课题：${title}\n\n`;
+
+            const sections = document.querySelectorAll('.reflection-section');
+            const designContent = designInput.value.split('\n');
+            
+            sections.forEach(section => {
+                const title = section.querySelector('h3').innerText;
+                const content = section.querySelector('textarea').value;
+                const lineRange = section.querySelector('input').value;
+                
+                // 添加反思部分标题
+                promptContent += `${title}：\n`;
+                
+                // 添加反思内容
+                if (content) {
+                    promptContent += `${content}\n\n`;
+                }
+                
+                // 添加引用内容
+                if (lineRange) {
+                    const [start, end] = lineRange.split('-').map(Number);
+                    const referencedText = designContent.slice(start - 1, end).join('\n');
+                    promptContent += `引用内容（行号${lineRange}）：
+${referencedText}\n\n`;
+                }
+            });
+
+            // 一次性输出完整提示词
+            document.getElementById('promptOutput').innerText = promptContent;
+        }
+    </script>
+</body>
+</html>

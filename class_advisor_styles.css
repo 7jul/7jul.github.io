@@ -62,7 +62,7 @@ button:hover {
 
 /* 结果区域规范 */
 .result-area {
-    width: 700px;
+    width: 91%;
     word-wrap: break-word;
     text-size-adjust: 100%;
     display: inline-block;
