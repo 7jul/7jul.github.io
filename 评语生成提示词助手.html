@@ -5,30 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>班级评语生成提示词助手</title>
     <link rel="stylesheet" href="class_advisor_styles.css">
+    <style>
+        .student-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        
+        }
+
+        .student-table th,
+        .student-table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        .student-table th {
+            background-color: #f8f9fa;
+        }
+        .student-table input,
+        .student-table tbody tr {
+            height: 48px; 
+        }
+        .student-table textarea {
+            height: 48px;
+            min-height: 48px;
+            resize: vertical;
+            vertical-align:top; /* 新增垂直居中 */
+            margin-bottom: 1rem;
+        }
+     
+        #promptOutput {
+            width: 100%;
+            min-height: 100px;
+            resize: vertical;
+            overflow: hidden;
+            box-sizing: border-box;
+            padding: 8px;
+        }
+        #nameInput {
+            width: 100%;
+            height: 100px;  /* 五行高度 */
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+        .name-import-btn {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>班级评语生成提示词助手</h1>
+     
+        <textarea id="nameInput" placeholder="请输入学生姓名，可用以下分隔符：换行、顿号、逗号、通道符（|）"></textarea>
+        <button type="button" class="primary-btn name-import-btn" onclick="importNames()">识别并填写姓名</button>
+
         <form id="commentForm">
-            <div class="form-group">
-                <label for="totalStudents">班级总人数：</label>
-                <input type="number" id="totalStudents" min="1" required>
-            </div>
-
-            <div class="form-group">
-                <label for="excellent">学优生人数：</label>
-                <input type="number" id="excellent" min="0" required>
-            </div>
-
-            <div class="form-group">
-                <label for="struggling">学困生人数：</label>
-                <input type="number" id="struggling" min="0" required>
-            </div>
-
-            <div class="form-group">
-                <label for="specialty">特长生构成：</label>
-                <textarea id="specialty" placeholder="格式示例：美术2人、编程1人" rows="3"></textarea>
-            </div>
+            <table class="student-table">
+                <thead>
+                    <tr>
+                        <th>学号</th>
+                        <th>姓名（选填）</th>
+                        <th>学习评价（选填）</th>
+                        <th>个性评价（选填）</th>
+                        <th>鼓励性语言（选填）</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 生成55行学生信息输入 -->
+                    <script>
+                        let tableBody = '';
+                        for (let i = 1; i <= 55; i++) {
+                            tableBody += `
+                                <tr>
+                                    <td>${i}</td>
+                                    <td><input type="text" class="name"></td>
+                                    <td><textarea placeholder="优良"></textarea></td>
+                                    <td><textarea placeholder="活泼开朗"></textarea></td>
+                                    <td><textarea placeholder="不断进取"></textarea></td>
+                                </tr>`;
+                        }
+                        document.write(tableBody);
+                    </script>
+                </tbody>
+            </table>
 
             <button type="submit" class="primary-btn">生成提示词</button>
         </form>
@@ -36,32 +95,51 @@
         <div class="result" id="promptResult">
             <h3>生成的提示词：</h3>
             <textarea id="promptOutput" readonly></textarea>
-            <button onclick="location.reload()" class="secondary-btn">重新填写</button>
         </div>
     </div>
 
     <script>
+        // 新增姓名识别函数
+        function importNames() {
+            const nameInput = document.getElementById('nameInput').value;
+            // 支持的分隔符：换行、顿号、逗号、通道符
+            const names = nameInput.split(/[\n、，,|]/).map(name => name.trim()).filter(name => name);
+            
+            const nameInputs = document.querySelectorAll('.name');
+            names.forEach((name, index) => {
+                if (index < nameInputs.length) {
+                    nameInputs[index].value = name;
+                }
+            });
+        }
+
         document.getElementById('commentForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            const total = parseInt(document.getElementById('totalStudents').value);
-            const excellent = parseInt(document.getElementById('excellent').value);
-            const struggling = parseInt(document.getElementById('struggling').value);
-            const specialty = document.getElementById('specialty').value.replace(/，/g, "、");
+            let prompt = "你是一位中小学班主任，请根据以下学生信息，为每个学生撰写约60字的评语，要求语言精炼优美，可使用成语，可活用修辞或引用诗词名言警句，多鼓励学生，促进学生身心健康发展：\n\n";
+            
+            const rows = document.querySelectorAll('.student-table tbody tr');
+            rows.forEach((row, index) => {
+                const number = index + 1;
+                const name = row.querySelector('.name').value.trim() || ``;
+                // 修改选择器为直接选择textarea
+                const academic = row.querySelector('td:nth-child(3) textarea').value.trim() || '优良';
+                const personality = row.querySelector('td:nth-child(4) textarea').value.trim() || '活泼开朗';
+                const encouragement = row.querySelector('td:nth-child(5) textarea').value.trim() || '不断进取';
 
-            if (excellent + struggling > total) {
-                alert('学优生和学困生总数不能超过班级总人数');
-                return;
-            }
-
-            const prompt = `根据以下班级数据生成评语：\n\n`
-                + `1. 班级总人数：${total}人\n`
-                + `2. 学优生：${excellent}人\n`
-                + `3. 学困生：${struggling}人\n`
-                + `4. 特长生构成：${specialty || '无'}`;
+                prompt += `${number} - ${name}：`;
+                prompt += `学习情况：${academic},`;
+                prompt += `个性特点：${personality},`;
+                prompt += `鼓励建议：${encouragement}`;
+                prompt += '\n';
+            });
 
             document.getElementById('promptOutput').value = prompt;
             document.getElementById('promptResult').style.display = 'block';
+ 
+            const textarea = document.getElementById('promptOutput');
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
         });
     </script>
 </body>

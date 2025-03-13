@@ -36,29 +36,12 @@
 
             <label for="homework">作业设计：</label>
             <textarea id="homework" rows="2" placeholder="作业设计"></textarea>
-
+            <p style="text-align: center;">
             <button type="button" id="generateBtn">生成提示词</button>
+            </p>
         </form>
 
-        <style>
-        /* 新增结果框样式 */
-        .result-area {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin: 20px 0;
-            background-color: #f8f8f8;
-            border-radius: 4px;
-            white-space: pre-wrap; /* 自动换行 */
-            word-break: break-all; /* 长单词强制换行 */
-        }
-
-        /* 保持原有表单样式 */
-        .form-control {
-            /* ... 原有样式不变 ... */
-        }
-        </style>
-
-        <div id="promptResult" class="result-area">
+         <div id="promptResult">
             <!-- 提示词生成结果会显示在这里 -->
         </div>
         <div class="copyright">
@@ -110,7 +93,7 @@
             prompt += '• 对学生的回答做一些预设\n';
 
             const resultDiv = document.getElementById('promptResult');
-            resultDiv.innerHTML = `<pre>${prompt}</pre>`;
+            resultDiv.innerHTML = `<pre class="result-area">${prompt}</pre>`;
             resultDiv.scrollIntoView({ behavior: 'smooth' });
         });
     </script>
