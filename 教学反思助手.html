@@ -5,10 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>教学反思助手</title>
     <style>
+        h1 {
+           color: #1a73e8;
+           text-align: center;
+           margin-bottom: 2rem;
+}
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1)
         }
         .design-container {
             display: flex;
@@ -80,6 +87,13 @@
           margin-top: 2rem;
           white-space: pre-wrap;
           }
+          .copyright {
+    text-align: center;
+    color: #666;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
     </style>
 </head>
 <body>
@@ -91,6 +105,8 @@
             <div class="line-numbers" id="lineNumbers"></div>
             <textarea id="designInput" placeholder="请输入您的教学设计..."></textarea>
         </div>
+        <!-- 新增：预处理按钮 -->
+        <button class="primary-btn" onclick="preprocessText()" style="margin-top: 10px;">预处理教学设计</button>
 
         <!-- 基本信息 -->
         <div class="basic-info">
@@ -99,46 +115,49 @@
             <input type="text" id="gradeLevel" placeholder="年级">
             <input type="text" id="lessonTitle" placeholder="课题">
         </div>
-
         <!-- 反思内容 -->
         <div class="reflection-section">
-            <h3>目标落实</h3>
+            <h3>目标落实情况</h3>
             <textarea placeholder="描述目标落实情况..."></textarea>
-            <input type="text" placeholder="引用行号（如1-3）">
+            引用教学设计：<input type="text" placeholder="标明行号如 1-3">
         </div>
         
         <div class="reflection-section">
             <h3>教学环节设计</h3>
             <textarea placeholder="描述教学环节设计..."></textarea>
-            <input type="text" placeholder="引用行号（如4-6）">
+            引用教学设计：<input type="text" placeholder="标明行号如 1-3">
         </div>
 
         <div class="reflection-section">
             <h3>学生预设与生成</h3>
             <textarea placeholder="描述学生预设与生成情况..."></textarea>
-            <input type="text" placeholder="引用行号（如7-9）">
+            引用教学设计：<input type="text" placeholder="标明行号如 1-3">
         </div>
 
         <div class="reflection-section">
             <h3>课堂评价运用</h3>
             <textarea placeholder="描述课堂评价运用..."></textarea>
-            <input type="text" placeholder="引用行号（如10-12）">
+            引用教学设计：<input type="text" placeholder="标明行号如 1-3">
+        </div>
+
+        <!-- 新增：不足与改进 -->
+        <div class="reflection-section">
+            <h3>不足与改进</h3>
+            <textarea placeholder="描述教学中的不足与改进措施..."></textarea>
+            引用教学设计：<input type="text" placeholder="标明行号如 1-3">
         </div>
 
         <button class="primary-btn" onclick="generatePrompt()">生成反思提示</button>
         <h3>生成的反思提示：</h3>
         <div id="promptOutput" class="result-area">
             <div class="result-item">
-                <div class="result-title">授课基本信息</div>
-                <div class="result-content" id="basicInfo"></div>
-            </div>
-            <div class="result-item">
-                <div class="result-title">教学反思内容</div>
-                <div class="result-content" id="reflectionContent"></div>
+             
             </div>
         </div>
     </div>
-
+    <div class="copyright">
+        @天津市南开区南开小学-7jul
+    </div>
     <script>
         // 自动生成行号
         const designInput = document.getElementById('designInput');
@@ -155,10 +174,15 @@
             }
             lineNumbers.innerText = numbers;
             lineNumbers.style.height = designInput.scrollHeight + 'px';  // 同步高度
+        });
 
-            // 自动调整高度
-            designInput.style.height = 'auto';
-            designInput.style.height = (designInput.scrollHeight) + 'px';
+        // 新增：单独处理高度调整
+        designInput.addEventListener('keydown', (e) => {
+            // 仅在按下回车键时调整高度
+            if (e.key === 'Enter') {
+                designInput.style.height = 'auto';
+                designInput.style.height = (designInput.scrollHeight) + 'px';
+            }
         });
 
         // 初始化时显示10行行号
@@ -170,38 +194,67 @@
             const title = document.getElementById('lessonTitle').value;
             
             // 基本信息部分
-            let promptContent = `授课基本信息：
+            let promptContent = `你是一名中小学教师，请根据以下授课信息撰写一份较为具体的教学反思，要求文字通顺易懂，引用核心素养要求或学科课程标准进行分析。\n
 教材版本：${version}
-年级：${grade}
-课题：${title}\n\n`;
-
+授课年级：${grade}
+授课题目：${title}\n`;
+        
             const sections = document.querySelectorAll('.reflection-section');
-            const designContent = designInput.value.split('\n');
-            
+            // 获取原始内容时去除自动换行
+            const designContent = designInput.value
+                .replace(/\r?\n/g, '\n')  // 统一换行符
+                .split('\n')
+                .filter(line => line.trim() !== '');  // 过滤空行
+                
             sections.forEach(section => {
-                const title = section.querySelector('h3').innerText;
+                const title = section.querySelector('h3').textContent;
                 const content = section.querySelector('textarea').value;
-                const lineRange = section.querySelector('input').value;
+                const refLines = section.querySelector('input').value;
                 
-                // 添加反思部分标题
-                promptContent += `${title}：\n`;
-                
-                // 添加反思内容
-                if (content) {
-                    promptContent += `${content}\n\n`;
-                }
-                
-                // 添加引用内容
-                if (lineRange) {
-                    const [start, end] = lineRange.split('-').map(Number);
-                    const referencedText = designContent.slice(start - 1, end).join('\n');
-                    promptContent += `引用内容（行号${lineRange}）：
-${referencedText}\n\n`;
+                promptContent += `${title}：${content}\n`;
+                if (refLines) {
+                    promptContent += `参考我的教学设计：\n`;
+                    const [start, end] = refLines.split('-').map(Number);
+                    // 使用过滤后的内容进行引用
+                    promptContent += designContent.slice(start-1, end).join('\n') + '\n\n';
+                } else {
+                    promptContent += '\n';
                 }
             });
-
-            // 一次性输出完整提示词
+        
             document.getElementById('promptOutput').innerText = promptContent;
+        }
+    
+        // 新增：预处理函数
+        function preprocessText() {
+            const maxLength = 60; // 每行最大字数
+            const content = designInput.value;
+            // 按原有换行符分割
+            const paragraphs = content.split('\n');
+            const processedContent = paragraphs.map(paragraph => {
+            // 对每个段落进行换行处理
+                let result = '';
+                let currentLine = '';
+                
+                paragraph.split('').forEach(char => {
+                    currentLine += char;
+                    if (currentLine.length >= maxLength && /[，。；！？]/.test(char)) {
+                        result += currentLine + '\n';
+                        currentLine = '';
+                    }
+                });
+                
+                // 添加剩余内容
+                if (currentLine.length > 0) {
+                    result += currentLine;
+                }
+                return result;
+            }).join('\n');
+            
+            // 更新文本框内容
+            designInput.value = processedContent;
+            // 触发input事件以更新行号
+            designInput.dispatchEvent(new Event('input'));
         }
     </script>
 </body>
