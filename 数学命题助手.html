@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学命题助手</title>
+    <link rel="stylesheet" href="class_advisor_styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>数学应用题命题助手</h1>
+        <form id="problemGeneratorForm">
+            <!-- 学段选择 -->
+            <label for="stage">学段：</label>
+            <input type="text" id="stage" placeholder="例如：小学/初中">
+
+            <!-- 年级输入 -->
+            <label for="grade">年级：</label>
+            <input type="text" id="grade" placeholder="例如：三年级">
+
+            <!-- 新增知识点输入 -->
+            <label for="knowledgePoint">知识点：</label>
+            <input type="text" id="knowledgePoint" placeholder="例如：分数运算、比例问题">
+
+            <!-- 题目类型 -->
+            <label for="problemType">题目类型：</label>
+            <select id="problemType">
+                <option value="计算题">计算题</option>
+                <option value="填空题">填空题</option>
+                <option value="应用题">应用题</option>
+            </select>
+
+            <!-- 例题输入 -->
+            <label for="example">参考例题：</label>
+            <textarea id="example" rows="3" placeholder="请输入参考例题内容"></textarea>
+
+            <!-- 难度选择 -->
+            <div class="form-row">
+                <label>难度：</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="difficulty" value="简单"> 简单</label>
+                    <label><input type="checkbox" name="difficulty" value="稍难"> 稍难</label>
+                    <label><input type="checkbox" name="difficulty" value="极难"> 极难</label>
+                </div>
+            </div>
+
+            <!-- 生活情景 -->
+            <div class="form-row">
+                <label>生活情景：</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="context" value="包含" checked> 包含</label>
+                    <label><input type="radio" name="context" value="不包含"> 不包含</label>
+                </div>
+            </div>
+
+            <!-- 出题数量 -->
+            <div class="form-row">
+                <label for="quantity">出题数量：</label>
+                <input type="number" id="quantity" min="1" max="10" value="5">
+            </div>
+        <p>
+            <button type="button" onclick="generatePrompt()">生成提示词</button>
+        </p>
+            
+        </form>
+
+        <div class="result-area" id="output"></div>
+    </div>
+
+    <script>
+        function generatePrompt() {
+            const data = {
+                stage: document.getElementById('stage').value,
+                grade: document.getElementById('grade').value,
+                knowledgePoint: document.getElementById('knowledgePoint').value, // 新增知识点
+                problemType: document.getElementById('problemType').value,
+                example: document.getElementById('example').value,
+                difficulty: Array.from(document.querySelectorAll('input[name="difficulty"]:checked')).map(c => c.value),
+                context: document.querySelector('input[name="context"]:checked').value,
+                quantity: document.getElementById('quantity').value
+            };
+
+            const prompt = `你是一位小学数学老师，请根据以下要求编写数学题：
+【学段】${data.stage}
+【年级】${data.grade}
+【知识点】${data.knowledgePoint}
+【题目类型】${data.problemType}
+【难度级别】${data.difficulty.join(',')}
+【生活情景】题目${data.context}生活场景
+【参考例题】${data.example}
+【出题数量】${data.quantity}题
+
+请确保命题：
+1. 符合课程标准要求
+2. 题干表述清晰无歧义
+3. 难度梯度合理
+4. 另附一份包含详细解题步骤和综合算式的答案`;
+
+            document.getElementById('output').innerText = prompt;
+        }
+    </script>
+        <div class="copyright">
+            @天津市南开区南开小学-7jul
+        </div>
+</body>
+</html>
