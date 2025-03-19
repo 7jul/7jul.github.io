@@ -84,3 +84,11 @@ button:hover {
     padding-top: 1rem;
     border-top: 1px solid #eee;
 }
+
+/* 小字号右对齐注释 */
+.comment-note {
+    text-align: right;
+    font-size: 12px;
+    color: #666;
+    margin-top: 1rem;
+}
