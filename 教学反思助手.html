@@ -213,7 +213,7 @@
                 
                 promptContent += `${title}：${content}\n`;
                 if (refLines) {
-                    promptContent += `参考我的教学设计：\n`;
+                    promptContent += `我的教学设计是：\n`;
                     const [start, end] = refLines.split('-').map(Number);
                     // 使用过滤后的内容进行引用
                     promptContent += designContent.slice(start-1, end).join('\n') + '\n\n';
