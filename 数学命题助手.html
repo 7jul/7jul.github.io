@@ -20,14 +20,14 @@
 
             <!-- 新增知识点输入 -->
             <label for="knowledgePoint">知识点：</label>
-            <input type="text" id="knowledgePoint" placeholder="例如：分数运算、比例问题">
+            <input type="text" id="knowledgePoint" placeholder="例如：分数运算、比例问题、面积计算等">
 
             <!-- 题目类型 -->
             <label for="problemType">题目类型：</label>
             <select id="problemType">
                 <option value="计算题">计算题</option>
                 <option value="填空题">填空题</option>
-                <option value="应用题">应用题</option>
+                <option value="文字题">文字题</option>
             </select>
 
             <!-- 例题输入 -->
@@ -91,9 +91,9 @@
 【出题数量】${data.quantity}题
 
 请确保命题：
-1. 符合课程标准要求
-2. 题干表述清晰无歧义
-3. 难度梯度合理
+1. 符合课程标准和学生已有知识要求。
+2. 题干表述清晰无歧义。
+3. 难度梯度合理，注意题目灵活性，不追求过于复杂。
 4. 另附一份包含详细解题步骤和综合算式的答案`;
 
             document.getElementById('output').innerText = prompt;
