@@ -85,7 +85,7 @@ button:hover {
     border-top: 1px solid #eee;
 }
 
-/* 小字号右对齐注释 */
+/* 小字号左对齐注释 */
 .comment-note {
     text-align: left;
     font-size: 12px;
