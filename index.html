@@ -38,12 +38,34 @@
             background: #fff;
             border-top: 1px solid #eee;
         }
+        audio {
+            width: 100%;
+            margin-top: 1rem;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <img src="school.png" alt="校徽" class="logo">
         <h1 style="text-align: center; color: #2c3e50;">提质&nbsp;&nbsp;&nbsp;&nbsp;增效&nbsp;&nbsp;&nbsp;&nbsp;减负</h1>
+
+        <h1>工作流-WORKFlow</h1>
+        <div class="usage-instructions">
+            python脚本自动获取新闻--Deepseek生成新闻稿--CosyVoice2-0.5B生成语音播报的工作流
+        </div>
+    <ul class="nav-list">
+        <li>
+            <div class="container" style="text-align: center;">
+            <audio controls>
+            <source src="media/weeknews.wav" type="audio/wav">
+            您的浏览器不支持音频播放
+            </audio>
+            <div class="comment-note">
+            提示：点击播放按钮开始收听最新周新闻,<a href="media/weeknews.wav">点此下载</a>wav音频文件。
+            </div>
+        </div>
+    </li>
+    </ul>
         <h1>提示词生成助手</h1>
         <!-- 新增使用说明 -->
         <div class="usage-instructions">

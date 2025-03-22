@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音频播放器</title>
+    <link rel="stylesheet" href="../class_advisor_styles.css">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        
+        audio {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+                margin: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>新闻音频</h1>
+        <audio controls>
+            <source src="../media/weeknews.wav" type="audio/wav">
+            您的浏览器不支持音频播放
+        </audio>
+        <div class="comment-note">
+            提示：点击播放按钮开始收听最新周新闻
+        </div>
+    </div>
+</body>
+</html>
