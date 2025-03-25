@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>优秀生评选稿提示词助手</title>
+    <link rel="stylesheet" href="class_advisor_styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>优秀生评选稿提示词生成器</h1>
+        <form id="excellentStudentForm">
+            <!-- 基础信息 -->
+            <label for="name">学生姓名：</label>
+            <input type="text" id="name" placeholder="例如：王晓东">
+            <label for="personality">个人特点：</label>
+            <input type="text" id="personality" placeholder="例如：开朗活泼/温文尔雅">
+
+            <label for="moralEvaluation">思想道德评价：</label>
+            <input type="text" id="moralEvaluation" placeholder="如：遵守校纪校规，尊敬师长，团结同学">
+            <label for="politicalHonors">思想政治荣誉：</label>
+            <input type="text" id="politicalHonors" placeholder="如：优秀共青团员、优秀少先队员、文明学生、优秀学生等">
+        <!-- 学习成绩 -->
+            <label for="gpa">各学科学习成绩：</label>
+            <input type="text" id="gpa" placeholder="例如：语文优秀，数学良好，英语优秀……">
+            <label for="academicAwards">学习类获奖：</label>
+                <textarea id="academicAwards" rows="4" placeholder="学科竞赛、学术活动获奖（如：
+2024年1月 南开区数学奥赛一等奖
+2024年6月 校级学科状元）"></textarea>
+            <label for="peGrade">体质健康标准评级：</label>
+            <input type="text" id="peGrade" placeholder="请根据体质健康评价标准如实填写">
+            <label for="sportsAwards">体育类获奖：</label>
+            <textarea id="sportsAwards" rows="4" placeholder="例：
+2024年5月，校运会100米冠军
+2025年1月，区域篮球赛团体亚军"></textarea>
+            <label for="artsAwards">文艺类、科技类或其他获奖：</label>
+            <textarea id="artsAwards" rows="4" placeholder="例：
+2024年2月 市钢琴比赛金奖
+2025年1月 校园艺术节优秀节目
+2024年6月 校园科技节优秀作品"></textarea>
+            <p>
+                <button type="button" onclick="generatePrompt()">生成提示词</button>
+            </p>
+        </form>
+
+        <div class="result-area" id="promptOutput"></div>
+    </div>
+
+    <script>
+        function generatePrompt() {
+            const data = {
+                name: document.getElementById('name').value,
+                personality: document.getElementById('personality').value,
+                moralEvaluation: document.getElementById('moralEvaluation').value,
+                politicalHonors: document.getElementById('politicalHonors').value,
+                gpa: document.getElementById('gpa').value,
+                academicAwards: document.getElementById('academicAwards').value,
+                peGrade: document.getElementById('peGrade').value,
+                sportsAwards: document.getElementById('sportsAwards').value,
+                artsAwards: document.getElementById('artsAwards').value
+            };
+
+            const prompt = `请根据以下信息，以第一人称的方式，撰写一份优秀生发言稿：
+
+【基础信息】
+• 姓名：${data.name}
+• 个性特点：${data.personality}
+• 思想道德评价：${data.moralEvaluation || '良好'}
+• 思想道德荣誉：${data.politicalHonors || '无'}
+
+【学业表现】
+• 学科成绩：${data.gpa}
+  学习类荣誉：${data.academicAwards}
+• 体质评级：${data.peGrade}
+  体育类荣誉：${data.sportsAwards}
+【其他荣誉】
+${data.artsAwards || '无'}
+【撰写要求】
+1. 结构要求：
+   - 分「思想品德」「学业成绩」「特长专长」「劳动实践」四个模块
+2. 内容要求：
+   - 重点突出分类获奖项目
+   - 体现学生综合素质发展
+3. 格式规范：
+   - 字数控制在600-800字
+   - 需包含恰当的标题`;
+   
+            document.getElementById('promptOutput').innerText = prompt;
+     }
+    </script>
+    <div class="copyright">
+        @天津市南开区南开小学-7jul
+    </div>
+</body>
+</html>
