@@ -42,6 +42,38 @@
             width: 100%;
             margin-top: 1rem;
         }
+     /* 新增使用说明样式 */
+    .usage-instructions {
+        text-align: center;
+        color: #666;
+        margin: 20px auto;
+        max-width: 600px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        font-size: 0.95em;
+    }
+    
+    /* 保持原有.nav-list样式不变 */
+    .nav-list li {
+        margin: 15px 0;
+        padding: 12px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        transition: transform 0.2s;
+    }
+    .nav-list li:hover {
+        transform: translateX(10px);
+    }
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        padding: 15px;
+        background: #fff;
+        border-top: 1px solid #eee;
+    }
     </style>
 </head>
 <body>
@@ -122,47 +154,9 @@
             <li><a href="https://github.com/7jul/TXT_llm">文本批量清洗工具&nbsp;&nbsp;</a><p class="comment-note">——将txt文档转换成便于AI理解的文本格式，需要python环境，安装jieba库，详情参照readme文档</p></li>
         </ul>    
     </div>
-    
     <div class="copyright">
         @天津市南开区南开小学-7jul<br>
         站点访问量：<span id="busuanzi_value_site_pv"></span>
     </div>
-    
-
 </body>
 </html>
-
-<style>
-/* 新增使用说明样式 */
-.usage-instructions {
-    text-align: center;
-    color: #666;
-    margin: 20px auto;
-    max-width: 600px;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    font-size: 0.95em;
-}
-
-/* 保持原有.nav-list样式不变 */
-.nav-list li {
-    margin: 15px 0;
-    padding: 12px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    transition: transform 0.2s;
-}
-.nav-list li:hover {
-    transform: translateX(10px);
-}
-.footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    padding: 15px;
-    background: #fff;
-    border-top: 1px solid #eee;
-}
-</style>
