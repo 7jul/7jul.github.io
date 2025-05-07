@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>南开小学五年十班读书节 - 好书推荐活动</title>
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<link href="magnific-popup.min.css" rel="stylesheet" />
+		<script src="jquery-3.6.0.min.js"></script>
+		<script src="jquery.magnific-popup.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				font-family: 'montserrat', sans-serif;
+				box-sizing: border-box;
+			}
+			body {
+		    	font-family: 'Microsoft YaHei', sans-serif;
+ 		   		line-height: 1.6;
+ 		   		max-width: 1200px;
+ 				margin: 0 auto;
+		    	padding: 20px;
+    			background-color: #f0f2f5;
+			}
+			.logo {
+           		display: block;
+          		margin: 20px auto;
+           		max-width: 150px;
+     		}
+			h1 {
+  				color: #1a73e8;
+ 			   	text-align: center;
+ 			   	margin-bottom: 2rem;
+			}
+			.container {
+		    	background: white;
+    			padding: 2rem;
+    			border-radius: 8px;
+   	 			box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+			}
+			.copyright {
+   			 	text-align: center;
+  			  	color: #666;
+ 			   	margin-top: 2rem;
+      		  	padding-top: 1rem;
+		  		border-top: 1px solid #eee;
+			}
+			.gallery-section {
+				width: 100%;
+				padding: 60px 0;
+				background: #f1f1f1;
+			}
+			.inner-width {
+				width: 100%;
+				max-width: 1200px;
+				margin: auto;
+				padding: 0 20px;
+			}
+			.gallery-section h1 {
+				text-align: center;
+				text-transform: uppercase;
+				color: #333;
+			}
+			.gallery-section .gallery {
+				display: flex;
+				flex-wrap: wrap-reverse;
+				justify-content: center;
+				gap: 8px;
+				border-radius: 12px;  /* 添加圆角 */
+				background: #fff;     /* 白色背景 */
+				box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* 2px阴影 */
+				padding: 16px;        /* 增加内边距 */
+				margin: 20px 0;       /* 添加外边距 */
+			}
+			.gallery-section .image {
+				flex: 16.6%; 
+				overflow: hidden;
+				cursor: pointer;
+			}
+			.gallery-section .image img {
+				width: 16.6%; /* 使用容器100%宽度 */
+				object-fit: contain; /* 改为contain保持完整比例 */
+				transition: 0.4s;
+				padding: 4px; /* 增加内边距 */
+				box-sizing: border-box;
+			}
+			
+			.gallery-section .image:hover img {
+				transform: scale(1.2) rotate(12deg);
+			}
+			
+			@media screen and (max-width: 768px) {
+				.gallery-section .image img {
+					height: 150px;
+				}
+			}
+			
+			@media screen and (max-width: 480px) {
+				.gallery-section .image img {
+					height: 120px;
+				}
+			}
+
+			@media screen and (max-width: 960px) {
+				.gallery-section .image {
+					flex: 33.33%;
+				}
+			}
+			@media screen and (max-width: 768px) {
+				.gallery-section .image {
+					flex: 50%;
+				}
+			}
+			@media screen and (max-width: 480px) {
+				.gallery-section .image {
+					flex: 100%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+		<img src="../school.png" alt="校徽" class="logo">
+		<h1>南开小学五年十班读书节</h1>
+		<h1>——班级图书角好书推荐活动</h1>
+		<p style="text-align: center;">教师有效干预下的班内图书角建设对于推动小学高年级阅读习惯养成具有很强实践意义。<br>在一定量阅读资源的支撑与教师的有效干预下，班级学生绝大多数能在一个学期内养成良好的阅读习惯，每学期校内的课外阅读量即可达到百万以上。<br>图书推荐活动是阅读推动活动的一部分，以下是本学期学生们在图书角读到的好书！</p>
+		</div>
+
+		<div class="gallery-section">
+			<div class="inner-width">
+				<div class="gallery" style="text-align: center;">
+						<div id="dynamicGallery"></div>
+				</div>
+			</div>
+		</div>
+		<script>
+			// 动态生成01-89图片链接
+			function generateGallery() {
+				const gallery = document.getElementById('dynamicGallery');
+				let html = '';
+				
+				for (let i = 1; i <= 89; i++) {
+					const num = i.toString().padStart(2, '0');
+					html += `
+						<a href="images/${num}.jpg" class="image">
+							<img src="images/${num}.jpg" alt="Image ${num}">
+						</a>
+					`;
+				}
+				gallery.innerHTML = html;
+			}
+			// 初始化画廊
+			$(document).ready(function() {
+				generateGallery();
+				$('.gallery').magnificPopup({
+					delegate: 'a',
+					type: 'image',
+					gallery: {
+						enabled: true
+					}
+				});
+			});
+		</script>
+		<div class="copyright">
+			@天津市南开区南开小学-7jul
+		</div>
+	</body>
+</html>
