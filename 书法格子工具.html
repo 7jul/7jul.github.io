@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>书法练习打格子工具</title>
+    <style>
+        :root {
+            --grid-size: 20;
+            --show-horizontal: 1;
+            --show-vertical: 1;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            background-image: 
+                linear-gradient(to right, #ccc 1px, transparent 1px),
+                linear-gradient(to bottom, #ccc 1px, transparent 1px);
+            background-size: 
+                calc(var(--grid-size) * 1px) calc(100vh * var(--show-vertical)),
+                calc(100vw * var(--show-horizontal)) calc(var(--grid-size) * 1px);
+            background-position: center; /* 新增居中定位 */
+            transition: background-size 0.3s ease;
+        }
+
+        .controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: opacity 0.3s ease; /* 新增透明度过渡 */
+            opacity: 0.15; /* 默认透明度 */
+        }
+        
+        .controls:hover {
+            opacity: 0.9; /* 鼠标悬停时透明度 */
+        }
+
+        .control-group {
+            margin: 10px 0;
+        }
+
+        /* 新增颜色预览块样式 */
+        .color-preview {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ccc;
+            margin-left: 10px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        /* 新增拖动相关样式 */
+        body.dragging {
+            cursor: move;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <div class="control-group">
+            <label>网格尺寸：
+                <input type="number" id="sizeInput" min="5" max="400" value="20" style="width: 60px; margin-right: 10px;">
+                <span>px</span>
+            </label>
+            <input type="range" id="gridSize" min="5" max="400" value="20" style="flex: 1;">
+        </div>
+        
+        <div class="control-group">
+            <label>
+                <input type="checkbox" id="horizontalLines" checked>
+                显示横线
+            </label>
+            <label>
+                <input type="checkbox" id="verticalLines" checked>
+                显示竖线
+            </label>
+        </div>
+        
+        <!-- 新增样式控制组 -->
+        <div class="control-group">
+            <label>线条宽度：
+                <select id="lineWidth">
+                    <option value="1">细线</option>
+                    <option value="2">中粗</option>
+                    <option value="3">粗线</option>
+                </select>
+            </label>
+            
+            <label>线条颜色：
+                <input type="color" id="lineColor" value="#cccccc">
+                <span class="color-preview" id="lineColorPreview"></span>
+            </label>
+            
+            <label>背景颜色：
+                <input type="color" id="backgroundColor" value="#ffffff">
+                <span class="color-preview" id="bgColorPreview"></span>
+            </label>
+        </div>
+    </div>
+
+    <script>
+        // 加载保存的设置
+        function loadSettings() {
+            const savedSize = localStorage.getItem('gridSize');
+            const showHorizontal = localStorage.getItem('showHorizontal') !== 'false';
+            const showVertical = localStorage.getItem('showVertical') !== 'false';
+
+            if (savedSize) {
+                document.getElementById('gridSize').value = savedSize;
+                document.getElementById('sizeValue').textContent = savedSize;
+                document.documentElement.style.setProperty('--grid-size', savedSize);
+            }
+
+            document.getElementById('horizontalLines').checked = showHorizontal;
+            document.getElementById('verticalLines').checked = showVertical;
+            updateGridVisibility();
+        }
+
+        // 更新网格可见性
+        function updateGridVisibility() {
+            const showH = document.getElementById('horizontalLines').checked ? 1 : 0;
+            const showV = document.getElementById('verticalLines').checked ? 1 : 0;
+            
+            document.documentElement.style.setProperty('--show-horizontal', showH);
+            document.documentElement.style.setProperty('--show-vertical', showV);
+            
+            localStorage.setItem('showHorizontal', showH);
+            localStorage.setItem('showVertical', showV);
+        }
+
+        // 事件监听
+        document.getElementById('gridSize').addEventListener('input', function(e) {
+            const size = e.target.value;
+            document.documentElement.style.setProperty('--grid-size', size);
+            document.getElementById('sizeValue').textContent = size;
+            localStorage.setItem('gridSize', size);
+        });
+
+        document.getElementById('horizontalLines').addEventListener('change', updateGridVisibility);
+        document.getElementById('verticalLines').addEventListener('change', updateGridVisibility);
+
+        // 初始化
+        loadSettings();
+        
+        // 响应窗口变化
+        window.addEventListener('resize', () => {
+            document.body.style.backgroundSize = 
+                `calc(var(--grid-size) * 1px) calc(100vh * var(--show-vertical)),
+                calc(100vw * var(--show-horizontal)) calc(var(--grid-size) * 1px)`;
+        });
+
+        // 在loadSettings中添加新设置的加载
+        function loadSettings() {
+            // 原有加载代码...
+            
+            // 加载新设置
+            const lineWidth = localStorage.getItem('lineWidth') || '1';
+            const lineColor = localStorage.getItem('lineColor') || '#cccccc';
+            const bgColor = localStorage.getItem('backgroundColor') || '#ffffff';
+
+            document.getElementById('lineWidth').value = lineWidth;
+            document.getElementById('lineColor').value = lineColor;
+            document.getElementById('backgroundColor').value = bgColor;
+            
+            updateLineStyle();
+            updateBackgroundColor();
+        }
+
+        // 新增样式更新函数
+        function updateLineStyle() {
+            const width = document.getElementById('lineWidth').value;
+            const color = document.getElementById('lineColor').value;
+            
+            document.documentElement.style.setProperty('--grid-color', color);
+            document.body.style.backgroundImage = 
+                `linear-gradient(to right, ${color} ${width}px, transparent ${width}px),
+                linear-gradient(to bottom, ${color} ${width}px, transparent ${width}px)`;
+            
+            document.getElementById('lineColorPreview').style.backgroundColor = color;
+            localStorage.setItem('lineWidth', width);
+            localStorage.setItem('lineColor', color);
+        }
+
+        function updateBackgroundColor() {
+            const color = document.getElementById('backgroundColor').value;
+            document.body.style.backgroundColor = color;
+            document.getElementById('bgColorPreview').style.backgroundColor = color;
+            localStorage.setItem('backgroundColor', color);
+        }
+
+        // 新增事件监听
+        document.getElementById('lineWidth').addEventListener('change', updateLineStyle);
+        document.getElementById('lineColor').addEventListener('input', updateLineStyle);
+        document.getElementById('backgroundColor').addEventListener('input', updateBackgroundColor);
+
+        // 初始化时更新颜色预览
+        loadSettings();
+    </script>
+</body>
+</html>
+
+    <script>
+        // 修改网格更新逻辑
+        function updateGridSize(size) {
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            
+            // 计算中心点偏移量
+            const horizontalOffset = (screenWidth/2) - (size * Math.floor(screenWidth/(size*2)));
+            const verticalOffset = (screenHeight/2) - (size * Math.floor(screenHeight/(size*2)));
+            
+            document.body.style.backgroundPosition = 
+                `${horizontalOffset}px ${verticalOffset}px, 
+                 ${horizontalOffset}px ${verticalOffset}px`;
+            
+            document.documentElement.style.setProperty('--grid-size', size);
+            document.getElementById('sizeValue').textContent = size;
+            localStorage.setItem('gridSize', size);
+        }
+
+        // 新增同步函数
+        function syncGridSize(value) {
+            document.getElementById('gridSize').value = value;
+            document.getElementById('sizeInput').value = value;
+            updateGridSize(value);
+        }
+
+        // 修改事件监听
+        document.getElementById('gridSize').addEventListener('input', function(e) {
+            syncGridSize(e.target.value);
+        });
+
+        document.getElementById('sizeInput').addEventListener('change', function(e) {
+            let value = Math.max(5, Math.min(400, e.target.value));
+            syncGridSize(value);
+        });
+
+        // 修改resize事件处理
+        window.addEventListener('resize', () => {
+            const currentSize = document.getElementById('gridSize').value;
+            updateGridSize(currentSize);
+        });
+
+        // 新增鼠标事件监听
+        const controls = document.querySelector('.controls');
+        
+        controls.addEventListener('mouseenter', () => {
+            controls.style.opacity = '0.9';
+        });
+        
+        controls.addEventListener('mouseleave', () => {
+            controls.style.opacity = '0.15';
+        });
+
+        // 新增拖动逻辑
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let offsetX = localStorage.getItem('gridOffsetX') || 0;
+        let offsetY = localStorage.getItem('gridOffsetY') || 0;
+
+        function startDrag(e) {
+            if (e.target.closest('.controls')) return; // 排除控制面板区域
+            isDragging = true;
+            startX = e.clientX - offsetX;
+            startY = e.clientY - offsetY;
+            document.body.classList.add('dragging');
+        }
+
+        function doDrag(e) {
+            if (!isDragging) return;
+            offsetX = e.clientX - startX;
+            offsetY = e.clientY - startY;
+            
+            document.body.style.backgroundPosition = 
+                `${offsetX}px ${offsetY}px, 
+                 ${offsetX}px ${offsetY}px`;
+        }
+
+        function stopDrag() {
+            isDragging = false;
+            document.body.classList.remove('dragging');
+            localStorage.setItem('gridOffsetX', offsetX);
+            localStorage.setItem('gridOffsetY', offsetY);
+        }
+
+        // 新增事件监听
+        document.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', doDrag);
+        document.addEventListener('mouseup', stopDrag);
+    </script>
