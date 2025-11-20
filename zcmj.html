@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>周长与面积</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .perimeter-control {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .perimeter-slider {
+            width: 100%;
+            margin: 15px 0;
+        }
+        
+        .perimeter-line {
+            height: 4px;
+            background: linear-gradient(90deg, #4CAF50, #2196F3);
+            margin: 20px 0;
+            transition: width 0.3s ease;
+        }
+        
+        .polygons-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .polygon-area {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .polygon-canvas {
+            width: 250px;
+            height: 250px;
+            margin: 15px auto;
+            border: 1px solid #ddd;
+            background: #f9f9f9;
+        }
+        
+        .polygon-controls {
+            margin: 15px 0;
+        }
+        
+        .sides-input {
+            width: 80px;
+            padding: 5px;
+            margin: 0 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .info-display {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .info-display div {
+            margin: 5px 0;
+        }
+        
+        .value {
+            font-weight: bold;
+            color: #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>周长与面积</h1>
+    </div>
+    
+    <div class="perimeter-control">
+        <h2>周长控制</h2>
+        <div>
+            <label for="perimeter-slider">周长：<span id="perimeter-value">50</span> 厘米</label>
+            <input type="range" id="perimeter-slider" class="perimeter-slider" 
+                   min="10" max="200" value="50" step="1">
+        </div>
+        <div class="perimeter-line" id="perimeter-line"></div>
+    </div>
+    
+    <div class="polygons-container">
+        <div class="polygon-area">
+            <h3>多边形 1</h3>
+            <div class="polygon-controls">
+                <label>边数：</label>
+                <input type="number" class="sides-input" id="sides1" min="3" max="20" value="4">
+            </div>
+            <canvas class="polygon-canvas" id="polygon1" width="250" height="250"></canvas>
+            <div class="info-display">
+                <div>边长：<span class="value" id="side-length1">12.5</span> 厘米</div>
+                <div>面积：<span class="value" id="area1">156.25</span> 平方厘米</div>
+            </div>
+        </div>
+        
+        <div class="polygon-area">
+            <h3>多边形 2</h3>
+            <div class="polygon-controls">
+                <label>边数：</label>
+                <input type="number" class="sides-input" id="sides2" min="3" max="20" value="5">
+            </div>
+            <canvas class="polygon-canvas" id="polygon2" width="250" height="250"></canvas>
+            <div class="info-display">
+                <div>边长：<span class="value" id="side-length2">10.0</span> 厘米</div>
+                <div>面积：<span class="value" id="area2">172.05</span> 平方厘米</div>
+            </div>
+        </div>
+        
+        <div class="polygon-area">
+            <h3>多边形 3</h3>
+            <div class="polygon-controls">
+                <label>边数：</label>
+                <input type="number" class="sides-input" id="sides3" min="3" max="20" value="6">
+            </div>
+            <canvas class="polygon-canvas" id="polygon3" width="250" height="250"></canvas>
+            <div class="info-display">
+                <div>边长：<span class="value" id="side-length3">8.33</span> 厘米</div>
+                <div>面积：<span class="value" id="area3">180.0</span> 平方厘米</div>
+            </div>
+        </div>
+        
+        <div class="polygon-area">
+            <h3>多边形 4</h3>
+            <div class="polygon-controls">
+                <label>边数：</label>
+                <input type="number" class="sides-input" id="sides4" min="3" max="20" value="8">
+            </div>
+            <canvas class="polygon-canvas" id="polygon4" width="250" height="250"></canvas>
+            <div class="info-display">
+                <div>边长：<span class="value" id="side-length4">6.25</span> 厘米</div>
+                <div>面积：<span class="value" id="area4">189.0</span> 平方厘米</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const perimeterSlider = document.getElementById('perimeter-slider');
+        const perimeterValue = document.getElementById('perimeter-value');
+        const perimeterLine = document.getElementById('perimeter-line');
+        
+        const sidesInputs = [
+            document.getElementById('sides1'),
+            document.getElementById('sides2'), 
+            document.getElementById('sides3'),
+            document.getElementById('sides4')
+        ];
+        
+        const canvases = [
+            document.getElementById('polygon1'),
+            document.getElementById('polygon2'),
+            document.getElementById('polygon3'), 
+            document.getElementById('polygon4')
+        ];
+        
+        const sideLengthDisplays = [
+            document.getElementById('side-length1'),
+            document.getElementById('side-length2'),
+            document.getElementById('side-length3'),
+            document.getElementById('side-length4')
+        ];
+        
+        const areaDisplays = [
+            document.getElementById('area1'),
+            document.getElementById('area2'),
+            document.getElementById('area3'),
+            document.getElementById('area4')
+        ];
+
+        // 初始化周长显示
+        function updatePerimeterDisplay() {
+            const perimeter = parseInt(perimeterSlider.value);
+            perimeterValue.textContent = perimeter;
+            perimeterLine.style.width = (perimeter / 2) + '%';
+            updateAllPolygons();
+        }
+
+        // 计算多边形面积（正多边形）
+        function calculatePolygonArea(sides, sideLength) {
+            // 如果是圆形
+            if (sides === 'c') {
+                // 圆形面积公式：A = π * r²，其中 r = 周长 / (2 * π)
+                const radius = sideLength / (2 * Math.PI);
+                const area = Math.PI * Math.pow(radius, 2);
+                return Math.round(area * 100) / 100; // 保留两位小数
+            }
+            
+            if (sides < 3) return 0;
+            
+            // 正多边形面积公式：A = (n * s²) / (4 * tan(π/n))
+            const n = sides;
+            const s = sideLength;
+            const area = (n * Math.pow(s, 2)) / (4 * Math.tan(Math.PI / n));
+            return Math.round(area * 100) / 100; // 保留两位小数
+        }
+
+        // 绘制多边形
+        function drawPolygon(canvas, sides, sideLength) {
+            const ctx = canvas.getContext('2d');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            
+            // 清除画布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (sides < 3) return;
+            
+            // 如果是圆形（边数输入为'c'）
+            if (sides === 'c') {
+                // 对于圆形，周长 = 2 * π * 半径，所以半径 = 周长 / (2 * π)
+                const radius = sideLength / (2 * Math.PI);
+                const maxRadius = Math.min(centerX, centerY) * 0.9; // 增加显示比例
+                const scaleFactor = Math.min(1, maxRadius / radius);
+                const scaledRadius = radius * scaleFactor;
+                
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, scaledRadius, 0, 2 * Math.PI);
+                ctx.fillStyle = '#e3f2fd';
+                ctx.strokeStyle = '#2196F3';
+                ctx.lineWidth = 2;
+                ctx.fill();
+                ctx.stroke();
+                return;
+            }
+            
+            // 对于多边形
+            // 根据边长计算半径：对于正多边形，边长 = 2 * 半径 * sin(π/n)
+            // 所以 半径 = 边长 / (2 * sin(π/n))
+            const radius = sideLength / (2 * Math.sin(Math.PI / sides));
+            const maxRadius = Math.min(centerX, centerY) * 0.9; // 增加显示比例
+            const scaleFactor = Math.min(1, maxRadius / radius);
+            const scaledRadius = radius * scaleFactor;
+            
+            ctx.beginPath();
+            
+            // 计算多边形顶点
+            for (let i = 0; i < sides; i++) {
+                const angle = (i * 2 * Math.PI / sides) - Math.PI / 2;
+                const x = centerX + scaledRadius * Math.cos(angle);
+                const y = centerY + scaledRadius * Math.sin(angle);
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            
+            ctx.closePath();
+            
+            // 设置样式
+            ctx.fillStyle = '#e3f2fd';
+            ctx.strokeStyle = '#2196F3';
+            ctx.lineWidth = 2;
+            
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        // 更新所有多边形
+        function updateAllPolygons() {
+            const perimeter = parseInt(perimeterSlider.value);
+            
+            for (let i = 0; i < 4; i++) {
+                const inputValue = sidesInputs[i].value;
+                let sides, sideLength;
+                
+                // 处理圆形输入
+                sides = parseInt(inputValue);
+                if (sides < 3) {
+                    sides = 'c'; // 边数小于3时显示圆形
+                    sideLength = perimeter; // 对于圆形，周长就是圆的周长
+                } else {
+                    if (sides > 20) sides = 20;
+                    sideLength = perimeter / sides;
+                }
+                
+                const area = calculatePolygonArea(sides, sideLength);
+                
+                // 更新显示
+                sideLengthDisplays[i].textContent = sideLength.toFixed(2);
+                areaDisplays[i].textContent = area;
+                
+                // 绘制多边形
+                drawPolygon(canvases[i], sides, sideLength);
+            }
+        }
+
+        // 事件监听
+        perimeterSlider.addEventListener('input', updatePerimeterDisplay);
+        
+        sidesInputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                // 限制边数范围
+                let sides = parseInt(input.value);
+                if (sides < 3) {
+                    sides = 2; // 设置为2表示圆形
+                } else if (sides > 20) {
+                    sides = 20;
+                }
+                input.value = sides;
+                updateAllPolygons();
+            });
+        });
+
+        // 初始化
+        updatePerimeterDisplay();
+    </script>
+</body>
+</html>
