@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>垃圾分类 - 青少年低碳科普</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .container { max-width: 1400px; margin: 0 auto; padding: 30px 50px; }
+        .back-link { display: inline-flex; align-items: center; margin-bottom: 30px; color: #2e7d32; text-decoration: none; font-size: 1.1rem; transition: transform 0.2s; }
+        .back-link:hover { transform: translateX(-5px); }
+        .back-link::before { content: '←'; margin-right: 8px; font-size: 1.3rem; }
+        .word-header { text-align: center; margin-bottom: 40px; padding: 40px; background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); border-radius: 20px; }
+        .word-title { font-size: 3.5rem; color: #2e7d32; margin-bottom: 15px; font-weight: 700; }
+        .word-en { font-size: 1.5rem; color: #5f6368; font-style: italic; }
+        .content-section { background: white; border-radius: 16px; padding: 35px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); }
+        .content-section h2 { color: #2e7d32; font-size: 1.6rem; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #c8e6c9; }
+        .content-section h3 { color: #388e3c; font-size: 1.3rem; margin: 25px 0 15px 0; }
+        .content-section p { color: #333; font-size: 1.15rem; line-height: 1.9; margin-bottom: 18px; text-align: justify; }
+        .highlight-box { background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); border-left: 5px solid #4caf50; padding: 25px 30px; margin: 25px 0; border-radius: 0 12px 12px 0; }
+        .highlight-box p { color: #1a1a1a; font-size: 1.2rem; margin: 0; }
+        .image-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin: 30px 0; }
+        .image-item { background: #f8f9fa; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); transition: transform 0.3s; }
+        .image-item:hover { transform: translateY(-5px); }
+        .image-placeholder { width: 100%; height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #c8e6c9 0%, #81c784 100%); color: #2e7d32; }
+        .image-placeholder .icon { font-size: 4rem; margin-bottom: 15px; }
+        .image-placeholder p { font-size: 1rem; color: #5f6368; margin: 0; }
+        .image-caption { padding: 18px; text-align: center; font-size: 1.05rem; color: #333; background: white; }
+        .fact-list { list-style: none; padding: 0; margin: 20px 0; }
+        .fact-list li { padding: 18px 25px; margin: 12px 0; background: #e8f5e9; border-radius: 10px; font-size: 1.1rem; color: #333; line-height: 1.8; transition: transform 0.2s; }
+        .fact-list li:hover { transform: translateX(8px); background: #c8e6c9; }
+        .fact-list li::before { content: '♻️'; margin-right: 12px; }
+        .bin-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 25px 0; }
+        .bin-card { padding: 20px; border-radius: 12px; text-align: center; transition: transform 0.3s; }
+        .bin-card:hover { transform: scale(1.05); }
+        .bin-card .icon { font-size: 3rem; margin-bottom: 10px; }
+        .bin-card h4 { font-size: 1.1rem; margin-bottom: 8px; }
+        .bin-card p { font-size: 0.9rem; margin: 0; }
+        .recycle-bin { background: #ef5350; color: white; }
+        .harmful-bin { background: #ffa726; color: white; }
+        .kitchen-bin { background: #66bb6a; color: white; }
+        .other-bin { background: #78909c; color: white; }
+        .timeline { position: relative; padding-left: 40px; margin: 30px 0; }
+        .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #4caf50, #2e7d32); border-radius: 3px; }
+        .timeline-item { position: relative; padding: 20px 25px; margin: 20px 0; background: #e8f5e9; border-radius: 12px; transition: transform 0.3s; }
+        .timeline-item:hover { transform: translateX(8px); }
+        .timeline-item::before { content: ''; position: absolute; left: -32px; top: 25px; width: 16px; height: 16px; background: #4caf50; border-radius: 50%; border: 3px solid white; }
+        .timeline-item h4 { color: #2e7d32; font-size: 1.15rem; margin-bottom: 8px; }
+        .timeline-item p { color: #555; font-size: 1.05rem; margin: 0; }
+        .action-tips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 25px 0; }
+        .action-tip { background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); padding: 25px; border-radius: 12px; text-align: center; transition: transform 0.3s; }
+        .action-tip:hover { transform: scale(1.03); }
+        .action-tip .icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .action-tip h4 { color: #2e7d32; font-size: 1.15rem; margin-bottom: 8px; }
+        .action-tip p { color: #555; font-size: 0.95rem; margin: 0; }
+        .science-box { background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border-radius: 12px; padding: 25px; margin: 20px 0; }
+        .science-box h3 { color: #e65100; margin-top: 0; }
+        .related-words { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+        .related-word { background: #c8e6c9; color: #2e7d32; padding: 10px 20px; border-radius: 20px; font-size: 1rem; text-decoration: none; transition: all 0.3s; }
+        .related-word:hover { background: #2e7d32; color: white; transform: scale(1.05); }
+        .footer { text-align: center; padding: 30px; color: #9aa0a6; font-size: 0.95rem; margin-top: 40px; border-top: 2px solid #e8f4f8; background: white; }
+        .footer-logo { margin-bottom: 15px; }
+        .school-logo { width: 80px; height: auto; border-radius: 50%; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+        @media (max-width: 1200px) { .container { padding: 20px 30px; } .word-title { font-size: 2.8rem; } .action-tips { grid-template-columns: repeat(2, 1fr); } .bin-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .image-gallery { grid-template-columns: 1fr; } .action-tips { grid-template-columns: 1fr; } .bin-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">返回词云</a>
+        
+        <div class="word-header">
+            <h1 class="word-title">垃圾分类</h1>
+            <p class="word-en">Waste Sorting</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>♻️ 什么是垃圾分类？</h2>
+            <p>
+                垃圾分类是指将生活垃圾按照不同的种类分开投放、收集、运输和处理的过程。这不是简单的"扔垃圾"，而是一门科学！不同的垃圾有不同的"归宿"，只有分类正确，垃圾才能变废为宝。
+            </p>
+            <p>
+                在中国，垃圾一般分为四大类：可回收物、有害垃圾、厨余垃圾（湿垃圾）和其他垃圾（干垃圾）。
+            </p>
+            <div class="highlight-box">
+                <p><strong>💡 简单理解：</strong>垃圾分类就像是给垃圾"找对家"——每个垃圾都有自己的家，只有回到正确的家，才能发挥作用（回收利用）或安全处理（有害垃圾）。</p>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🗑️ 垃圾分类四大类</h2>
+            <p>让我们来认识垃圾的四个"家"：</p>
+            
+            <div class="bin-grid">
+                <div class="bin-card recycle-bin">
+                    <div class="icon">♻️</div>
+                    <h4>可回收物</h4>
+                    <p>纸类、塑料、金属、玻璃、织物</p>
+                </div>
+                <div class="bin-card harmful-bin">
+                    <div class="icon">☠️</div>
+                    <h4>有害垃圾</h4>
+                    <p>废电池、废灯管、过期药品、化妆品</p>
+                </div>
+                <div class="bin-card kitchen-bin">
+                    <div class="icon">🍂</div>
+                    <h4>厨余垃圾</h4>
+                    <p>剩菜剩饭、瓜皮果核、蛋壳、茶渣</p>
+                </div>
+                <div class="bin-card other-bin">
+                    <div class="icon">🗑️</div>
+                    <h4>其他垃圾</h4>
+                    <p>卫生纸、纸尿裤、烟蒂、一次性餐具</p>
+                </div>
+            </div>
+            
+            <h3>📝 分类小技巧</h3>
+            <ul class="fact-list">
+                <li><strong>可回收物</strong>：能卖钱的、能循环利用的——废纸、塑料瓶、旧衣服</li>
+                <li><strong>有害垃圾</strong>：对人体或环境有害的——废电池、废灯管、过期药</li>
+                <li><strong>厨余垃圾</strong>：会腐烂的——剩饭剩菜、果皮蛋壳</li>
+                <li><strong>其他垃圾</strong>：以上都不是的——卫生纸、烟蒂、破碗</li>
+            </ul>
+        </div>
+        
+        <div class="content-section">
+            <h2>🔬 为什么需要垃圾分类？</h2>
+            <p>你可能会问：为什么要这么麻烦地分类呢？答案很简单——为了我们的地球！</p>
+            
+            <div class="science-box">
+                <h3>🌍 垃圾分类的好处</h3>
+                <p>
+                    1. <strong>减少占地</strong>：生活垃圾中有些可以回收利用，分类后需要填埋或焚烧的垃圾会大大减少<br>
+                    2. <strong>变废为宝</strong>：1吨废塑料可以回炼600公斤柴油，1吨废纸可以造800公斤好纸<br>
+                    3. <strong>减少污染</strong>：有害垃圾单独处理，避免污染土壤和水源<br>
+                    4. <strong>节约资源</strong>：回收利用比生产新材料节约60%-90%的能源
+                </p>
+            </div>
+            
+            <div class="image-gallery">
+                <div class="image-item">
+                    <div class="image-placeholder">
+                        <span class="icon">♻️</span>
+                        <p>可回收物回收</p>
+                    </div>
+                    <p class="image-caption">塑料瓶、纸箱都可以回收再利用</p>
+                </div>
+                <div class="image-item">
+                    <div class="image-placeholder">
+                        <span class="icon">🏭</span>
+                        <p>垃圾处理厂</p>
+                    </div>
+                    <p class="image-caption">分类后的垃圾会被分类处理</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>📈 垃圾分类的发展历程</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>1957年</h4>
+                    <p>中国首次提出"废品回收"口号，开始有意识地回收利用废品</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2000年</h4>
+                    <p>北京、上海等8个城市开始垃圾分类试点</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2019年</h4>
+                    <p>全国地级以上城市启动生活垃圾分类，全面进入"强制分类"时代</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>现在</h4>
+                    <p>垃圾分类已成为新时尚，上海、北京等城市效果显著</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🌱 我们可以做什么？</h2>
+            
+            <div class="action-tips">
+                <div class="action-tip">
+                    <div class="icon">📚</div>
+                    <h4>学习分类</h4>
+                    <p>了解垃圾分类标准，分清楚各类垃圾</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">🏠</div>
+                    <h4>家里准备</h4>
+                    <p>在家准备分类垃圾桶，养成习惯</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">🗣️</div>
+                    <h4>带动家人</h4>
+                    <p>教会家人一起做好垃圾分类</p>
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 30px;">💡 分类小测试</h3>
+            <ul class="fact-list">
+                <li><strong>外卖盒</strong>：洗干净是可回收物，没洗干净是其他垃圾</li>
+                <li><strong>奶茶杯</strong>：奶茶喝完洗干净是可回收物，残留奶茶是厨余垃圾</li>
+                <li><strong>快递纸箱</strong>：压扁后投入可回收物，记得撕掉胶带</li>
+                <li><strong>碎玻璃</strong>：用报纸包好，投入可回收物（避免伤人）</li>
+            </ul>
+        </div>
+        
+        <div class="content-section">
+            <h2>🔗 相关词汇</h2>
+            <div class="related-words">
+                <a href="low_carbon_life.html" class="related-word">低碳生活</a>
+                <a href="recycling.html" class="related-word">回收利用</a>
+                <a href="circular_economy.html" class="related-word">循环经济</a>
+                <a href="zero_waste.html" class="related-word">零废弃</a>
+                <a href="sustainable_development.html" class="related-word">可持续发展</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-logo">
+                <img src="school.png" alt="学校徽标" class="school-logo">
+            </div>
+            <p>天津市南开区南开小学-7jul</p>
+            <p>🌍 青少年低碳环保科普教育</p>
+        </div>
+    </div>
+</body>
+</html>

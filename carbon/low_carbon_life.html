@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>低碳生活 - 青少年低碳科普</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .container { max-width: 1400px; margin: 0 auto; padding: 30px 50px; }
+        .back-link { display: inline-flex; align-items: center; margin-bottom: 30px; color: #00796b; text-decoration: none; font-size: 1.1rem; transition: transform 0.2s; }
+        .back-link:hover { transform: translateX(-5px); }
+        .back-link::before { content: '←'; margin-right: 8px; font-size: 1.3rem; }
+        .word-header { text-align: center; margin-bottom: 40px; padding: 40px; background: linear-gradient(135deg, #b2dfdb 0%, #80cbc4 100%); border-radius: 20px; }
+        .word-title { font-size: 3.5rem; color: #00796b; margin-bottom: 15px; font-weight: 700; }
+        .word-en { font-size: 1.5rem; color: #5f6368; font-style: italic; }
+        .content-section { background: white; border-radius: 16px; padding: 35px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); }
+        .content-section h2 { color: #00796b; font-size: 1.6rem; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #b2dfdb; }
+        .content-section h3 { color: #00897b; font-size: 1.3rem; margin: 25px 0 15px 0; }
+        .content-section p { color: #333; font-size: 1.15rem; line-height: 1.9; margin-bottom: 18px; text-align: justify; }
+        .highlight-box { background: linear-gradient(135deg, #b2dfdb 0%, #80cbc4 100%); border-left: 5px solid #009688; padding: 25px 30px; margin: 25px 0; border-radius: 0 12px 12px 0; }
+        .highlight-box p { color: #1a1a1a; font-size: 1.2rem; margin: 0; }
+        .image-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin: 30px 0; }
+        .image-item { background: #f8f9fa; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); transition: transform 0.3s; }
+        .image-item:hover { transform: translateY(-5px); }
+        .image-placeholder { width: 100%; height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #b2dfdb 0%, #4db6ac 100%); color: #00796b; }
+        .image-placeholder .icon { font-size: 4rem; margin-bottom: 15px; }
+        .image-placeholder p { font-size: 1rem; color: #5f6368; margin: 0; }
+        .image-caption { padding: 18px; text-align: center; font-size: 1.05rem; color: #333; background: white; }
+        .fact-list { list-style: none; padding: 0; margin: 20px 0; }
+        .fact-list li { padding: 18px 25px; margin: 12px 0; background: #e0f2f1; border-radius: 10px; font-size: 1.1rem; color: #333; line-height: 1.8; transition: transform 0.2s; }
+        .fact-list li:hover { transform: translateX(8px); background: #b2dfdb; }
+        .fact-list li::before { content: '🌱'; margin-right: 12px; }
+        .life-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 25px 0; }
+        .life-card { background: linear-gradient(135deg, #b2dfdb 0%, #80cbc4 100%); padding: 25px; border-radius: 12px; text-align: center; transition: transform 0.3s; }
+        .life-card:hover { transform: scale(1.03); }
+        .life-card .icon { font-size: 3rem; margin-bottom: 12px; }
+        .life-card h4 { color: #00796b; font-size: 1.15rem; margin-bottom: 10px; }
+        .life-card p { color: #555; font-size: 1rem; margin: 0; }
+        .timeline { position: relative; padding-left: 40px; margin: 30px 0; }
+        .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #009688, #00796b); border-radius: 3px; }
+        .timeline-item { position: relative; padding: 20px 25px; margin: 20px 0; background: #e0f2f1; border-radius: 12px; transition: transform 0.3s; }
+        .timeline-item:hover { transform: translateX(8px); }
+        .timeline-item::before { content: ''; position: absolute; left: -32px; top: 25px; width: 16px; height: 16px; background: #009688; border-radius: 50%; border: 3px solid white; }
+        .timeline-item h4 { color: #00796b; font-size: 1.15rem; margin-bottom: 8px; }
+        .timeline-item p { color: #555; font-size: 1.05rem; margin: 0; }
+        .action-tips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 25px 0; }
+        .action-tip { background: linear-gradient(135deg, #b2dfdb 0%, #80cbc4 100%); padding: 25px; border-radius: 12px; text-align: center; transition: transform 0.3s; }
+        .action-tip:hover { transform: scale(1.03); }
+        .action-tip .icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .action-tip h4 { color: #00796b; font-size: 1.15rem; margin-bottom: 8px; }
+        .action-tip p { color: #555; font-size: 0.95rem; margin: 0; }
+        .science-box { background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border-radius: 12px; padding: 25px; margin: 20px 0; }
+        .science-box h3 { color: #e65100; margin-top: 0; }
+        .related-words { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+        .related-word { background: #b2dfdb; color: #00796b; padding: 10px 20px; border-radius: 20px; font-size: 1rem; text-decoration: none; transition: all 0.3s; }
+        .related-word:hover { background: #00796b; color: white; transform: scale(1.05); }
+        .footer { text-align: center; padding: 30px; color: #9aa0a6; font-size: 0.95rem; margin-top: 40px; border-top: 2px solid #e8f4f8; background: white; }
+        .footer-logo { margin-bottom: 15px; }
+        .school-logo { width: 80px; height: auto; border-radius: 50%; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+        @media (max-width: 1200px) { .container { padding: 20px 30px; } .word-title { font-size: 2.8rem; } .action-tips { grid-template-columns: repeat(2, 1fr); } .life-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .image-gallery { grid-template-columns: 1fr; } .action-tips { grid-template-columns: 1fr; } .life-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">返回词云</a>
+        
+        <div class="word-header">
+            <h1 class="word-title">低碳生活</h1>
+            <p class="word-en">Low-carbon Lifestyle</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>🌱 什么是低碳生活？</h2>
+            <p>
+                "低碳生活"是指在日常生活中尽量减少二氧化碳排放的生活方式。简单说，就是通过改变一些生活习惯，让我们的"碳足迹"变得更小。
+            </p>
+            <p>
+                低碳生活不是要我们回到原始社会，不用电、不坐车，而是要在享受现代生活的同时，有意识地选择对环境更友好的方式。比如：走楼梯 instead of 坐电梯，骑自行车 instead of 开车...
+            </p>
+            <div class="highlight-box">
+                <p><strong>💡 简单理解：</strong>低碳生活就是"省着过"——不是抠门，而是聪明。既省钱，又环保，还健康！</p>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🔬 碳足迹是什么？</h2>
+            <p>
+                "碳足迹"是指个人或组织在日常活动中直接或间接产生的温室气体排放总量，通常用二氧化碳当量来表示。每个人的衣食住行都会产生碳足迹。
+            </p>
+            
+            <div class="science-box">
+                <h3>📊 日常活动的碳排放</h3>
+                <p>
+                    你知道吗？每一度电约产生0.86公斤二氧化碳，每开一小时空调约产生0.5公斤二氧化碳，每坐一小时汽车约产生0.2公斤二氧化碳。了解这些数据，我们就能更好地选择低碳方式。
+                </p>
+            </div>
+            
+            <ul class="fact-list">
+                <li><strong>用电</strong>：1度电 ≈ 0.86公斤 CO₂（用煤发电）</li>
+                <li><strong>开车</strong>：1公里 ≈ 0.2公斤 CO₂</li>
+                <li><strong>坐飞机</strong>：1小时 ≈ 90公斤 CO₂</li>
+                <li><strong>吃牛肉</strong>：1公斤 ≈ 27公斤 CO₂</li>
+                <li><strong>买新衣服</strong>：1件T恤 ≈ 7公斤 CO₂</li>
+            </ul>
+            
+            <div class="image-gallery">
+                <div class="image-item">
+                    <div class="image-placeholder">
+                        <span class="icon">🚲</span>
+                        <p>绿色出行</p>
+                    </div>
+                    <p class="image-caption">骑自行车出行，零排放又健康</p>
+                </div>
+                <div class="image-item">
+                    <div class="image-placeholder">
+                        <span class="icon">💡</span>
+                        <p>节约用电</p>
+                    </div>
+                    <p class="image-caption">随手关灯，使用节能电器</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🏠 生活中的低碳小妙招</h2>
+            <p>低碳生活可以从身边的小事做起：</p>
+            
+            <div class="life-grid">
+                <div class="life-card">
+                    <div class="icon">🚿</div>
+                    <h4>节约用水</h4>
+                    <p>缩短淋浴时间，关闭水龙头</p>
+                </div>
+                <div class="life-card">
+                    <div class="icon">💡</div>
+                    <h4>节约用电</h4>
+                    <p>使用LED灯，拔掉不用的插头</p>
+                </div>
+                <div class="life-card">
+                    <div class="icon">🚗</div>
+                    <h4>绿色出行</h4>
+                    <p>多走路、骑车、坐公交</p>
+                </div>
+                <div class="life-card">
+                    <div class="icon">🛍️</div>
+                    <h4>减少塑料袋</h4>
+                    <p>自带购物袋</p>
+                </div>
+                <div class="life-card">
+                    <div class="icon">📦</div>
+                    <h4>减少包装</h4>
+                    <p>选择简包装产品</p>
+                </div>
+                <div class="life-card">
+                    <div class="icon">🍽️</div>
+                    <h4>光盘行动</h4>
+                    <p>吃多少点多少，不浪费</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🌍 低碳饮食</h2>
+            <p>
+                你知道吗？选择什么食物也会影响碳排放。不同食物的"碳成本"差异很大。
+            </p>
+            
+            <ul class="fact-list">
+                <li><strong>多吃蔬菜</strong>：蔬菜的碳排放最低，比肉类低10-50倍</li>
+                <li><strong>适量吃肉</strong>：尤其是牛肉，碳排放最高，可以多吃鱼和鸡</li>
+                <li><strong>本地食物</strong>：选择本地生产的食物，减少运输产生的排放</li>
+                <li><strong>当季食物</strong>：当季食物不需要温室种植，碳排放更少</li>
+                <li><strong>减少外卖</strong>：外卖包装会产生大量垃圾和碳排放</li>
+            </ul>
+            
+            <h3>🥗 一周低碳饮食建议</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>周一：素食日</h4>
+                    <p>以蔬菜为主，减少肉类摄入</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>周二：本地食物日</h4>
+                    <p>选择本地农贸市场的新鲜食材</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>周三：少外卖日</h4>
+                    <p>自己在家做饭，减少一次性包装</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>周四：光盘日</h4>
+                    <p>吃多少盛多少，践行"光盘行动"</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🌱 我们可以做什么？</h2>
+            
+            <div class="action-tips">
+                <div class="action-tip">
+                    <div class="icon">🌡️</div>
+                    <h4>空调适度</h4>
+                    <p>夏天空调不低于26℃，冬天不高于20℃</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">💡</div>
+                    <h4>随手关灯</h4>
+                    <p>离开房间随手关灯</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">♻️</div>
+                    <h4>垃圾分类</h4>
+                    <p>做好垃圾分类，支持回收</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">🛍️</div>
+                    <h4>自带水杯</h4>
+                    <p>少买瓶装水，自带水杯</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">📱</div>
+                    <h4>双面打印</h4>
+                    <p>节约纸张，减少浪费</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">🌳</div>
+                    <h4>多种绿植</h4>
+                    <p>在家养植物，吸收二氧化碳</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🔗 相关词汇</h2>
+            <div class="related-words">
+                <a href="carbon_neutrality.html" class="related-word">碳中和</a>
+                <a href="carbon_emissions.html" class="related-word">碳排放</a>
+                <a href="waste_sorting.html" class="related-word">垃圾分类</a>
+                <a href="green_consumption.html" class="related-word">绿色消费</a>
+                <a href="sustainable_development.html" class="related-word">可持续发展</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-logo">
+                <img src="school.png" alt="学校徽标" class="school-logo">
+            </div>
+            <p>天津市南开区南开小学-7jul</p>
+            <p>🌍 青少年低碳环保科普教育</p>
+        </div>
+    </div>
+</body>
+</html>

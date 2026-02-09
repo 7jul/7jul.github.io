@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绿色出行 - 青少年低碳科普</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .container { max-width: 1400px; margin: 0 auto; padding: 30px 50px; }
+        .back-link { display: inline-flex; align-items: center; margin-bottom: 30px; color: #2e7d32; text-decoration: none; font-size: 1.1rem; }
+        .word-header { text-align: center; margin-bottom: 40px; padding: 40px; background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); border-radius: 20px; }
+        .word-title { font-size: 3.5rem; color: #2e7d32; margin-bottom: 15px; }
+        .content-section { background: white; border-radius: 16px; padding: 35px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); }
+        .content-section h2 { color: #2e7d32; font-size: 1.6rem; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #c8e6c9; }
+        .content-section h3 { color: #388e3c; font-size: 1.3rem; margin: 25px 0 15px 0; }
+        .content-section p { color: #333; font-size: 1.15rem; line-height: 1.9; margin-bottom: 18px; text-align: justify; }
+        .highlight-box { background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); border-left: 5px solid #4caf50; padding: 25px 30px; margin: 25px 0; border-radius: 0 12px 12px 0; }
+        .highlight-box p { font-size: 1.2rem; }
+        .image-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin: 30px 0; }
+        .image-item { background: #f8f9fa; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        .image-placeholder { width: 100%; height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #c8e6c9 0%, #81c784 100%); color: #2e7d32; }
+        .image-placeholder .icon { font-size: 4rem; margin-bottom: 15px; }
+        .image-caption { padding: 18px; text-align: center; background: white; }
+        .fact-list { list-style: none; padding: 0; margin: 20px 0; }
+        .fact-list li { padding: 18px 25px; margin: 12px 0; background: #e8f5e9; border-radius: 10px; font-size: 1.1rem; transition: transform 0.2s; }
+        .fact-list li:hover { transform: translateX(8px); }
+        .fact-list li::before { content: '🚲'; margin-right: 12px; }
+        .travel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 25px 0; }
+        .travel-card { background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); padding: 25px; border-radius: 12px; text-align: center; }
+        .travel-card:hover { transform: scale(1.03); }
+        .travel-card .icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .travel-card h4 { color: #2e7d32; font-size: 1.15rem; margin-bottom: 8px; }
+        .action-tips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 25px 0; }
+        .action-tip { background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); padding: 25px; border-radius: 12px; text-align: center; }
+        .action-tip:hover { transform: scale(1.03); }
+        .action-tip .icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .action-tip h4 { color: #2e7d32; font-size: 1.15rem; margin-bottom: 8px; }
+        .related-words { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+        .related-word { background: #c8e6c9; color: #2e7d32; padding: 10px 20px; border-radius: 20px; font-size: 1rem; text-decoration: none; }
+        .related-word:hover { background: #2e7d32; color: white; }
+        .footer { text-align: center; padding: 30px; color: #9aa0a6; font-size: 0.95rem; margin-top: 40px; border-top: 2px solid #e8f4f8; background: white; }
+        .school-logo { width: 80px; border-radius: 50%; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← 返回词云</a>
+        
+        <div class="word-header">
+            <h1 class="word-title">绿色出行</h1>
+            <p class="word-en" style="font-size: 1.5rem; color: #5f6368; font-style: italic;">Green Travel</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>🚲 什么是绿色出行？</h2>
+            <p>
+                绿色出行是指采用对环境影响最小的方式出行，主要包括步行、骑自行车、乘坐公共交通等。与私家车相比，这些出行方式能显著减少碳排放。
+            </p>
+            <p>
+                交通领域是碳排放的重要来源之一，约占全球碳排放总量的1/4。选择绿色出行，是每个人都能做到的环保行动！
+            </p>
+            <div class="highlight-box">
+                <p><strong>💡 简单理解：</strong>绿色出行就是"用最环保的方式到达目的地"。走路、骑车、坐公交，都是绿色出行！</p>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🚇 绿色出行的方式</h2>
+            <div class="travel-grid">
+                <div class="travel-card">
+                    <div class="icon">🚶</div>
+                    <h4>步行</h4>
+                    <p>零排放、最健康的出行方式</p>
+                </div>
+                <div class="travel-card">
+                    <div class="icon">🚲</div>
+                    <h4>骑自行车</h4>
+                    <p>零排放，锻炼身体</p>
+                </div>
+                <div class="travel-card">
+                    <div class="icon">🚌</div>
+                    <h4>公共交通</h4>
+                    <p>地铁、公交多人同乘，碳排放低</p>
+                </div>
+                <div class="travel-card">
+                    <div class="icon">🚄</div>
+                    <h4>高铁</h4>
+                    <p>电气化铁路，碳排放远低于飞机</p>
+                </div>
+                <div class="travel-card">
+                    <div class="icon">🚗</div>
+                    <h4>新能源汽车</h4>
+                    <p>电动车、氢燃料电池车</p>
+                </div>
+                <div class="travel-card">
+                    <div class="icon">🚲</div>
+                    <h4>共享出行</h4>
+                    <p>共享单车、网约车合乘</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>📊 绿色出行的减碳效果</h2>
+            <ul class="fact-list">
+                <li><strong>步行 vs 开车</strong>：步行1公里减少约0.2公斤CO₂</li>
+                <li><strong>骑车 vs 开车</strong>：骑车1公里减少约0.3公斤CO₂</li>
+                <li><strong>公交 vs 私家车</strong>：公交出行每人每公里减少约0.1公斤CO₂</li>
+                <li><strong>高铁 vs 飞机</strong>：高铁人均碳排放约为飞机的1/3</li>
+                <li><strong>1天绿色出行</strong>：坚持绿色出行1天≈种1棵树</li>
+            </ul>
+            <div class="image-gallery">
+                <div class="image-item">
+                    <div class="image-placeholder">
+                        <span class="icon">🚲</span>
+                        <p>骑行出行</p>
+                    </div>
+                    <p class="image-caption">骑自行车是最环保的出行方式之一</p>
+                </div>
+                <div class="image-item">
+                    <div class="image-placeholder">
+                        <span class="icon">🚌</span>
+                        <p>公共交通</p>
+                    </div>
+                    <p class="image-caption">公交出行减少私家车使用</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🌱 我们可以做什么？</h2>
+            <div class="action-tips">
+                <div class="action-tip">
+                    <div class="icon">🚶</div>
+                    <h4>短途步行</h4>
+                    <p>近距离出行选择步行</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">🚲</div>
+                    <h4>骑车出行</h4>
+                    <p>中短距离选择骑自行车</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">🚌</div>
+                    <h4>公交优先</h4>
+                    <p>长距离选择公共交通</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🔗 相关词汇</h2>
+            <div class="related-words">
+                <a href="low_carbon_life.html" class="related-word">低碳生活</a>
+                <a href="electric_vehicle.html" class="related-word">电动汽车</a>
+                <a href="public_transport.html" class="related-word">公共交通</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div style="margin-bottom: 15px;">
+                <img src="school.png" alt="学校徽标" class="school-logo">
+            </div>
+            <p>天津市南开区南开小学-7jul</p>
+            <p>🌍 青少年低碳环保科普教育</p>
+        </div>
+    </div>
+</body>
+</html>

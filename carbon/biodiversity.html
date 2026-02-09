@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生物多样性 - 青少年低碳科普</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .container { max-width: 1400px; margin: 0 auto; padding: 30px 50px; }
+        .back-link { display: inline-flex; align-items: center; margin-bottom: 30px; color: #2e7d32; text-decoration: none; font-size: 1.1rem; }
+        .word-header { text-align: center; margin-bottom: 40px; padding: 40px; background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); border-radius: 20px; }
+        .word-title { font-size: 3.5rem; color: #2e7d32; margin-bottom: 15px; }
+        .content-section { background: white; border-radius: 16px; padding: 35px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); }
+        .content-section h2 { color: #2e7d32; font-size: 1.6rem; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #c8e6c9; }
+        .content-section h3 { color: #388e3c; font-size: 1.3rem; margin: 25px 0 15px 0; }
+        .content-section p { color: #333; font-size: 1.15rem; line-height: 1.9; margin-bottom: 18px; text-align: justify; }
+        .highlight-box { background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); border-left: 5px solid #4caf50; padding: 25px 30px; margin: 25px 0; border-radius: 0 12px 12px 0; }
+        .highlight-box p { font-size: 1.2rem; }
+        .image-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin: 30px 0; }
+        .image-item { background: #f8f9fa; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        .image-placeholder { width: 100%; height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #c8e6c9 0%, #81c784 100%); color: #2e7d32; }
+        .image-placeholder .icon { font-size: 4rem; margin-bottom: 15px; }
+        .image-caption { padding: 18px; text-align: center; background: white; }
+        .fact-list { list-style: none; padding: 0; margin: 20px 0; }
+        .fact-list li { padding: 18px 25px; margin: 12px 0; background: #e8f5e9; border-radius: 10px; font-size: 1.1rem; transition: transform 0.2s; }
+        .fact-list li:hover { transform: translateX(8px); }
+        .fact-list li::before { content: '🦋'; margin-right: 12px; }
+        .bio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 25px 0; }
+        .bio-card { background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); padding: 25px; border-radius: 12px; text-align: center; }
+        .bio-card:hover { transform: scale(1.03); }
+        .bio-card .icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .bio-card h4 { color: #2e7d32; font-size: 1.15rem; margin-bottom: 8px; }
+        .action-tips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 25px 0; }
+        .action-tip { background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); padding: 25px; border-radius: 12px; text-align: center; }
+        .action-tip:hover { transform: scale(1.03); }
+        .action-tip .icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .action-tip h4 { color: #2e7d32; font-size: 1.15rem; margin-bottom: 8px; }
+        .related-words { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+        .related-word { background: #c8e6c9; color: #2e7d32; padding: 10px 20px; border-radius: 20px; font-size: 1rem; text-decoration: none; }
+        .related-word:hover { background: #2e7d32; color: white; }
+        .footer { text-align: center; padding: 30px; color: #9aa0a6; font-size: 0.95rem; margin-top: 40px; border-top: 2px solid #e8f4f8; background: white; }
+        .school-logo { width: 80px; border-radius: 50%; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← 返回词云</a>
+        
+        <div class="word-header">
+            <h1 class="word-title">生物多样性</h1>
+            <p class="word-en" style="font-size: 1.5rem; color: #5f6368; font-style: italic;">Biodiversity</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>🦋 什么是生物多样性？</h2>
+            <p>
+                生物多样性是指地球上所有生命形式的丰富程度，包括各种动物、植物、微生物，以及它们与环境之间的相互作用。简单说，就是地球上"生命的多样性"——物种越多，生态系统越健康！
+            </p>
+            <p>
+                生物多样性是地球生命系统的基础，也是人类生存发展的根基。但现在，每年都有物种在灭绝，我们正在经历"第六次大灭绝"。
+            </p>
+            <div class="highlight-box">
+                <p><strong>💡 简单理解：</strong>生物多样性就像"大自然的大家庭"——每个生物都有自己的角色大家一起让地球变得美好。缺少任何一个成员，家庭就不完整了！</p>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🌍 生物多样性的三个层次</h2>
+            <div class="bio-grid">
+                <div class="bio-card">
+                    <div class="icon">🐼</div>
+                    <h4>基因多样性</h4>
+                    <p>同一物种内的遗传差异</p>
+                </div>
+                <div class="bio-card">
+                    <div class="icon">🦁</div>
+                    <h4>物种多样性</h4>
+                    <p>地球上的各种动植物</p>
+                </div>
+                <div class="bio-card">
+                    <div class="icon">🌳</div>
+                    <h4>生态系统多样性</h4>
+                    <p>森林、海洋、湿地等</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>📊 为什么生物多样性重要？</h2>
+            <ul class="fact-list">
+                <li><strong>生态系统服务</strong>：蜜蜂传粉、蚯蚓松土、森林净化空气</li>
+                <li><strong>食物来源</strong>>我们的食物都来自生物多样性</li>
+                <li><strong>医药资源</strong>：许多药物来源于动植物</li>
+                <li><strong>气候调节</strong>：森林、海洋调节气候</li>
+                <li><strong>文化价值</strong>：自然给人类带来精神享受</li>
+            </ul>
+            <div class="image-gallery">
+                <div class="image-item">
+                    <div class="image-placeholder">
+                        <span class="icon">🐼</span>
+                        <p>大熊猫</p>
+                    </div>
+                    <p class="image-caption">中国是生物多样性最丰富的国家之一</p>
+                </div>
+                <div class="image-item">
+                    <div class="image-placeholder">
+                        <span class="icon">🌊</span>
+                        <p>海洋生态</p>
+                    </div>
+                    <p class="image-caption">海洋生物多样性丰富</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🌱 我们可以做什么？</h2>
+            <div class="action-tips">
+                <div class="action-tip">
+                    <div class="icon">🌳</div>
+                    <h4>爱护动植物</h4>
+                    <p>不伤害野生动物</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">🗑️</div>
+                    <h4>垃圾分类</h4>
+                    <p>减少环境污染</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">📚</div>
+                    <h4>学习知识</h4>
+                    <p>了解生物多样性</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🔗 相关词汇</h2>
+            <div class="related-words">
+                <a href="sustainable_development.html" class="related-word">可持续发展</a>
+                <a href="ecological_restoration.html" class="related-word">生态修复</a>
+                <a href="forest_conservation.html" class="related-word">森林保护</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div style="margin-bottom: 15px;">
+                <img src="school.png" alt="学校徽标" class="school-logo">
+            </div>
+            <p>天津市南开区南开小学-7jul</p>
+            <p>🌍 青少年低碳环保科普教育</p>
+        </div>
+    </div>
+</body>
+</html>

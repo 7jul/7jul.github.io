@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全球变暖 - 青少年低碳科普</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .container { max-width: 1400px; margin: 0 auto; padding: 30px 50px; }
+        .back-link { display: inline-flex; align-items: center; margin-bottom: 30px; color: #c62828; text-decoration: none; font-size: 1.1rem; transition: transform 0.2s; }
+        .back-link:hover { transform: translateX(-5px); }
+        .back-link::before { content: '←'; margin-right: 8px; font-size: 1.3rem; }
+        .word-header { text-align: center; margin-bottom: 40px; padding: 40px; background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); border-radius: 20px; }
+        .word-title { font-size: 3.5rem; color: #c62828; margin-bottom: 15px; font-weight: 700; }
+        .word-en { font-size: 1.5rem; color: #5f6368; font-style: italic; }
+        .content-section { background: white; border-radius: 16px; padding: 35px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); }
+        .content-section h2 { color: #c62828; font-size: 1.6rem; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #ffebee; }
+        .content-section h3 { color: #d32f2f; font-size: 1.3rem; margin: 25px 0 15px 0; }
+        .content-section p { color: #333; font-size: 1.15rem; line-height: 1.9; margin-bottom: 18px; text-align: justify; }
+        .highlight-box { background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); border-left: 5px solid #f44336; padding: 25px 30px; margin: 25px 0; border-radius: 0 12px 12px 0; }
+        .highlight-box p { color: #1a1a1a; font-size: 1.2rem; margin: 0; }
+        .image-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin: 30px 0; }
+        .image-item { background: #f8f9fa; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); transition: transform 0.3s; }
+        .image-item:hover { transform: translateY(-5px); }
+        .image-placeholder { width: 100%; height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #ffebee 0%, #ef9a9a 100%); color: #c62828; }
+        .image-placeholder .icon { font-size: 4rem; margin-bottom: 15px; }
+        .image-placeholder p { font-size: 1rem; color: #5f6368; margin: 0; }
+        .image-caption { padding: 18px; text-align: center; font-size: 1.05rem; color: #333; background: white; }
+        .fact-list { list-style: none; padding: 0; margin: 20px 0; }
+        .fact-list li { padding: 18px 25px; margin: 12px 0; background: #ffebee; border-radius: 10px; font-size: 1.1rem; color: #333; line-height: 1.8; transition: transform 0.2s; }
+        .fact-list li:hover { transform: translateX(8px); background: #ffcdd2; }
+        .fact-list li::before { content: '🌡️'; margin-right: 12px; }
+        .effect-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 25px 0; }
+        .effect-card { background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); padding: 25px; border-radius: 12px; transition: transform 0.3s; }
+        .effect-card:hover { transform: scale(1.02); }
+        .effect-card .icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .effect-card h4 { color: #c62828; font-size: 1.15rem; margin-bottom: 8px; }
+        .effect-card p { color: #555; font-size: 1rem; margin: 0; }
+        .timeline { position: relative; padding-left: 40px; margin: 30px 0; }
+        .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #f44336, #c62828); border-radius: 3px; }
+        .timeline-item { position: relative; padding: 20px 25px; margin: 20px 0; background: #ffebee; border-radius: 12px; transition: transform 0.3s; }
+        .timeline-item:hover { transform: translateX(8px); }
+        .timeline-item::before { content: ''; position: absolute; left: -32px; top: 25px; width: 16px; height: 16px; background: #f44336; border-radius: 50%; border: 3px solid white; }
+        .timeline-item h4 { color: #c62828; font-size: 1.15rem; margin-bottom: 8px; }
+        .timeline-item p { color: #555; font-size: 1.05rem; margin: 0; }
+        .action-tips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 25px 0; }
+        .action-tip { background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); padding: 25px; border-radius: 12px; text-align: center; transition: transform 0.3s; }
+        .action-tip:hover { transform: scale(1.03); }
+        .action-tip .icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .action-tip h4 { color: #c62828; font-size: 1.15rem; margin-bottom: 8px; }
+        .action-tip p { color: #555; font-size: 0.95rem; margin: 0; }
+        .science-box { background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border-radius: 12px; padding: 25px; margin: 20px 0; }
+        .science-box h3 { color: #e65100; margin-top: 0; }
+        .related-words { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+        .related-word { background: #ffebee; color: #c62828; padding: 10px 20px; border-radius: 20px; font-size: 1rem; text-decoration: none; transition: all 0.3s; }
+        .related-word:hover { background: #c62828; color: white; transform: scale(1.05); }
+        .footer { text-align: center; padding: 30px; color: #9aa0a6; font-size: 0.95rem; margin-top: 40px; border-top: 2px solid #e8f4f8; background: white; }
+        .footer-logo { margin-bottom: 15px; }
+        .school-logo { width: 80px; height: auto; border-radius: 50%; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+        @media (max-width: 1200px) { .container { padding: 20px 30px; } .word-title { font-size: 2.8rem; } .action-tips { grid-template-columns: repeat(2, 1fr); } .effect-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .image-gallery { grid-template-columns: 1fr; } .action-tips { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">返回词云</a>
+        
+        <div class="word-header">
+            <h1 class="word-title">全球变暖</h1>
+            <p class="word-en">Global Warming</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>🌡️ 什么是全球变暖？</h2>
+            <p>
+                全球变暖是指地球平均气温持续上升的现象。就像发烧时体温升高一样，地球也在"发烧"。过去100年，地球平均气温已经上升了约1.1℃，这是人类历史上最快的升温时期！
+            </p>
+            <p>
+                导致全球变暖的主要原因是人类活动排放的温室气体，特别是二氧化碳。这些气体就像棉被一样裹住地球，让热量无法散逸，导致地球持续升温。
+            </p>
+            <div class="highlight-box">
+                <p><strong>💡 生活比喻：</strong>想象一下，如果你盖了10床棉被，即使在夏天也会热得满头大汗。全球变暖就是因为地球被盖了太多"温室气体棉被"！</p>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🔬 全球变暖的科学原理</h2>
+            <p>
+                地球的能量平衡很精妙：太阳把热量以光的形式送到地球，地球表面吸收光能后变暖，同时也会向外散发热量（红外线）。正常情况下，散发的热量和吸收的热量差不多，地球温度保持稳定。
+            </p>
+            
+            <div class="science-box">
+                <h3>🌍 温室效应详解</h3>
+                <p>
+                    大气中的二氧化碳、甲烷等气体就像温室的玻璃和塑料薄膜——它们允许太阳光进入，但阻止地面散发的红外线逃逸到太空。这就是"温室效应"。
+                </p>
+                <p style="margin-top: 15px;">
+                    适量的温室效应让地球保持温暖，平均温度约15℃，适合生命生存。但如果温室气体过多，温室效应过强，地球就会持续升温。
+                </p>
+            </div>
+            
+            <h3>📊 温度变化数据</h3>
+            <ul class="fact-list">
+                <li><strong>工业革命前</strong>：全球平均气温约14℃</li>
+                <li><strong>2023年</strong>：全球平均气温约15.2℃</li>
+                <li><strong>预计2100年</strong>：如果继续排放，可能升高1.5-4℃</li>
+            </ul>
+            
+            <div class="image-gallery">
+                <div class="image-item">
+                    <div class="image-placeholder">
+                        <span class="icon">🌡️</span>
+                        <p>温度上升趋势图</p>
+                    </div>
+                    <p class="image-caption">过去100年全球气温持续上升</p>
+                </div>
+                <div class="image-item">
+                    <div class="image-placeholder">
+                        <span class="icon">🏭</span>
+                        <p>二氧化碳排放</p>
+                    </div>
+                    <p class="image-caption">人类活动是变暖的主因</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>⚠️ 全球变暖的影响</h2>
+            <p>全球变暖不仅仅是天气变热，它会带来一系列连锁反应：</p>
+            
+            <div class="effect-grid">
+                <div class="effect-card">
+                    <div class="icon">🧊</div>
+                    <h4>冰川融化</h4>
+                    <p>北极、南极冰盖融化，海平面上升，威胁沿海城市</p>
+                </div>
+                <div class="effect-card">
+                    <div class="icon">🌊</div>
+                    <h4>海平面上升</h4>
+                    <p>预计到2100年，海平面可能上升0.3-1米</p>
+                </div>
+                <div class="effect-card">
+                    <div class="icon">🌪️</div>
+                    <h4>极端天气</h4>
+                    <p>干旱、洪水、台风、热浪等更加频繁强烈</p>
+                </div>
+                <div class="effect-card">
+                    <div class="icon">🦁</div>
+                    <h4>生态危机</h4>
+                    <p>动植物栖息地减少，部分物种面临灭绝风险</p>
+                </div>
+            </div>
+            
+            <ul class="fact-list">
+                <li><strong>珊瑚白化</strong>：海水温度升高导致珊瑚死亡，海洋生态系统受损</li>
+                <li><strong>永冻层融化</strong>：西伯利亚等地永冻层融化，释放更多甲烷</li>
+                <li><strong>粮食危机</strong>：气候变化影响农作物产量，威胁粮食安全</li>
+                <li><strong>疾病传播</strong>：热带疾病向温带地区扩散</li>
+            </ul>
+        </div>
+        
+        <div class="content-section">
+            <h2>🌱 我们可以做什么？</h2>
+            <p>应对全球变暖，每个人都可以贡献力量：</p>
+            
+            <div class="action-tips">
+                <div class="action-tip">
+                    <div class="icon">🚲</div>
+                    <h4>低碳出行</h4>
+                    <p>少开车，多走路、骑车或坐公交</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">💡</div>
+                    <h4>节约能源</h4>
+                    <p>随手关灯，使用节能电器</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">🌳</div>
+                    <h4>植树种绿</h4>
+                    <p>参与植树活动，增加碳汇</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">♻️</div>
+                    <h4>垃圾分类</h4>
+                    <p>减少浪费，支持回收</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">🥗</div>
+                    <h4>低碳饮食</h4>
+                    <p>减少肉类，适当多吃蔬菜</p>
+                </div>
+                <div class="action-tip">
+                    <div class="icon">📢</div>
+                    <h4>传播理念</h4>
+                    <p>向身边的人宣传环保知识</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>📈 全球在行动</h2>
+            <p>世界各国已经认识到全球变暖的严重性，正在采取行动：</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>2015年</h4>
+                    <p>《巴黎协定》签署，全球承诺控制温升2℃以内</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2020年</h4>
+                    <p>中国提出"双碳"目标，积极应对气候变化</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2030年</h4>
+                    <p>各国计划实现碳排放达峰，减少温室气体排放</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2050年</h4>
+                    <p>全球计划实现碳中和，扭转全球变暖趋势</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🔗 相关词汇</h2>
+            <div class="related-words">
+                <a href="climate_change.html" class="related-word">气候变化</a>
+                <a href="carbon_emissions.html" class="related-word">碳排放</a>
+                <a href="carbon_neutrality.html" class="related-word">碳中和</a>
+                <a href="renewable_energy.html" class="related-word">可再生能源</a>
+                <a href="sustainable_development.html" class="related-word">可持续发展</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-logo">
+                <img src="school.png" alt="学校徽标" class="school-logo">
+            </div>
+            <p>天津市南开区南开小学-7jul</p>
+            <p>🌍 青少年低碳环保科普教育</p>
+        </div>
+    </div>
+</body>
+</html>
