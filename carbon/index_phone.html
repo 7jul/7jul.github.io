@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>碳排放词汇词云 - 青少年科普教育</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #e8f4f8 0%, #f0f7fa 50%, #e8f4f8 100%);
+            overflow: hidden;
+            min-height: 100vh;
+            touch-action: manipulation;
+        }
+        
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        #word-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 20px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #1a73e8, #34a853, #1a73e8);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientFlow 4s ease infinite;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(26, 115, 232, 0.3);
+        }
+        
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 200% center; }
+        }
+        
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            pointer-events: auto;
+        }
+        
+        .control-btn {
+            background: #1a73e8;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.3);
+        }
+        
+        .control-btn:hover, .control-btn:active {
+            background: #1557b0;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(26, 115, 232, 0.4);
+        }
+        
+        .info-panel {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 15px 20px;
+            z-index: 10;
+            text-align: center;
+            max-width: 90%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            animation: slideUp 1s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        
+        .info-panel h2 {
+            color: #1a73e8;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        
+        .info-panel p {
+            color: #5f6368;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e8f4f8 0%, #f0f7fa 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 1s ease;
+        }
+        
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(26, 115, 232, 0.2);
+            border-top-color: #1a73e8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: #1a73e8;
+            margin-top: 15px;
+            font-size: 1rem;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        .word-tooltip {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 12px;
+            padding: 15px 20px;
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            max-width: 280px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .word-tooltip.visible {
+            opacity: 1;
+        }
+        
+        .word-tooltip .cn {
+            color: #1a73e8;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .word-tooltip .en {
+            color: #5f6368;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .word-tooltip .link {
+            color: #34a853;
+            font-size: 0.85rem;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            padding: 5px 10px;
+            background: #e8f5e9;
+            border-radius: 15px;
+        }
+        
+        .stats {
+            position: fixed;
+            top: 90px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 10px 15px;
+            z-index: 10;
+            color: #333;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 0.8rem;
+        }
+        
+        .stats-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 5px 0;
+        }
+        
+        .stats-label {
+            color: #5f6368;
+            margin-right: 8px;
+        }
+        
+        .stats-value {
+            color: #1a73e8;
+            font-weight: 600;
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            color: #9aa0a6;
+            font-size: 0.7rem;
+            z-index: 10;
+            text-align: right;
+            max-width: 60%;
+        }
+        
+        .home-link {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #1a73e8;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .home-link:hover, .home-link:active {
+            color: #1557b0;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .home-link img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 20;
+            background: #1a73e8;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .back-btn:hover {
+            background: #1557b0;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">正在加载低碳环保知识...</div>
+    </div>
+    
+    <canvas id="particles-canvas"></canvas>
+    <canvas id="word-canvas"></canvas>
+    
+    <a href="../index.html" class="back-btn">
+        ← 返回首页
+    </a>
+    
+    <div class="header">
+        <div class="logo">🌍 低碳生活 · 绿色未来</div>
+        <div class="controls">
+            <button class="control-btn" ontouchstart="toggleRotation()" onclick="toggleRotation()">
+                🔄 旋转
+            </button>
+            <button class="control-btn" ontouchstart="changeTheme()" onclick="changeTheme()">
+                🎨 主题
+            </button>
+            <button class="control-btn" ontouchstart="zoomOut()" onclick="zoomOut()" title="缩小">
+                🔍-
+            </button>
+            <button class="control-btn" ontouchstart="zoomIn()" onclick="zoomIn()" title="放大">
+                🔍+
+            </button>
+            <button class="control-btn" ontouchstart="resetView()" onclick="resetView()">
+                🔄 重置
+            </button>
+        </div>
+    </div>
+    
+    <div class="stats">
+        <div class="stats-item">
+            <span class="stats-label">词汇</span>
+            <span class="stats-value" id="word-count">0</span>
+        </div>
+    </div>
+    
+    <div class="info-panel">
+        <h2>🌱 碳排放核心词汇学习</h2>
+        <p>点击词汇查看解释，了解低碳生活从我做起</p>
+    </div>
+    
+    <a href="../index.html" class="home-link">
+        <img src="../school.png" alt="校徽">
+        回到首页
+    </a>
+    
+    <div class="footer">青少年低碳环保科普教育词云</div>
+    
+    <div class="word-tooltip" id="tooltip">
+        <div class="cn" id="tooltip-cn"></div>
+        <div class="en" id="tooltip-en"></div>
+        <a class="link" id="tooltip-link" href="#" target="_blank">点击查看 →</a>
+    </div>
+    
+    <script>
+        // 精选的低碳环保核心词汇（适合青少年理解）
+        const wordData = [
+  {
+    "cn": "碳中和",
+    "en": "Carbon Neutrality",
+    "link": "carbon_neutrality.html"
+  },
+  {
+    "cn": "碳达峰",
+    "en": "Carbon Peak",
+    "link": "carbon_peak.html"
+  },
+  {
+    "cn": "碳排放",
+    "en": "Carbon Emissions",
+    "link": "carbon_emissions.html"
+  },
+  {
+    "cn": "气候变化",
+    "en": "Climate Change",
+    "link": "climate_change.html"
+  },
+  {
+    "cn": "全球变暖",
+    "en": "Global Warming",
+    "link": "global_warming.html"
+  },
+  {
+    "cn": "可持续发展",
+    "en": "Sustainable Development",
+    "link": "sustainable_development.html"
+  },
+  {
+    "cn": "可再生能源",
+    "en": "Renewable Energy",
+    "link": "renewable_energy.html"
+  },
+  {
+    "cn": "低碳生活",
+    "en": "Low-carbon Lifestyle",
+    "link": "low_carbon_life.html"
+  },
+  {
+    "cn": "垃圾分类",
+    "en": "Waste Sorting",
+    "link": "waste_sorting.html"
+  },
+  {
+    "cn": "清洁能源",
+    "en": "Clean Energy",
+    "link": "clean_energy.html"
+  },
+  {
+    "cn": "太阳能",
+    "en": "Solar Energy",
+    "link": "solar_energy.html"
+  },
+  {
+    "cn": "光伏",
+    "en": "Photovoltaic (PV)",
+    "link": "photovoltaic.html"
+  },
+  {
+    "cn": "风能",
+    "en": "Wind Energy",
+    "link": "wind_energy.html"
+  },
+  {
+    "cn": "水力发电",
+    "en": "Hydropower",
+    "link": "hydropower.html"
+  },
+  {
+    "cn": "氢能",
+    "en": "Hydrogen Energy",
+    "link": "hydrogen_energy.html"
+  },
+  {
+    "cn": "绿氢",
+    "en": "Green Hydrogen",
+    "link": "green_hydrogen.html"
+  },
+  {
+    "cn": "储能",
+    "en": "Energy Storage",
+    "link": "energy_storage.html"
+  },
+  {
+    "cn": "能源效率",
+    "en": "Energy Efficiency",
+    "link": "energy_efficiency.html"
+  },
+  {
+    "cn": "去碳化",
+    "en": "Decarbonization",
+    "link": "decarbonization.html"
+  },
+  {
+    "cn": "绿色建筑",
+    "en": "Green Building",
+    "link": "green_building.html"
+  },
+  {
+    "cn": "节能建筑",
+    "en": "Energy-efficient Building",
+    "link": "energy_building.html"
+  },
+  {
+    "cn": "电动汽车",
+    "en": "Electric Vehicle (EV)",
+    "link": "electric_vehicle.html"
+  },
+  {
+    "cn": "新能源汽车",
+    "en": "New Energy Vehicle (NEV)",
+    "link": "new_energy_vehicle.html"
+  },
+  {
+    "cn": "公共交通",
+    "en": "Public Transport",
+    "link": "public_transport.html"
+  },
+  {
+    "cn": "绿色出行",
+    "en": "Green Travel",
+    "link": "green_travel.html"
+  },
+  {
+    "cn": "骑行",
+    "en": "Cycling",
+    "link": "cycling.html"
+  },
+  {
+    "cn": "步行",
+    "en": "Walking",
+    "link": "walking.html"
+  },
+  {
+    "cn": "低碳生活",
+    "en": "Low-carbon Lifestyle",
+    "link": "low_carbon_life.html"
+  },
+  {
+    "cn": "绿色消费",
+    "en": "Green Consumption",
+    "link": "green_consumption.html"
+  },
+  {
+    "cn": "节约用水",
+    "en": "Water Conservation",
+    "link": "water_conservation.html"
+  },
+  {
+    "cn": "节约用电",
+    "en": "Save Electricity",
+    "link": "save_electricity.html"
+  },
+  {
+    "cn": "减少浪费",
+    "en": "Reduce Waste",
+    "link": "reduce_waste.html"
+  },
+  {
+    "cn": "回收利用",
+    "en": "Recycling",
+    "link": "recycling.html"
+  },
+  {
+    "cn": "旧物利用",
+    "en": "Reuse",
+    "link": "reuse.html"
+  },
+  {
+    "cn": "二手交易",
+    "en": "Second-hand Trading",
+    "link": "secondhand_trading.html"
+  },
+  {
+    "cn": "减少一次性用品",
+    "en": "Reduce Single-use Items",
+    "link": "reduce_single_use.html"
+  },
+  {
+    "cn": "绿色包装",
+    "en": "Green Packaging",
+    "link": "green_packaging.html"
+  },
+  {
+    "cn": "植物基饮食",
+    "en": "Plant-based Diet",
+    "link": "plant_based_diet.html"
+  },
+  {
+    "cn": "减少食物浪费",
+    "en": "Fight Food Waste",
+    "link": "food_waste.html"
+  },
+  {
+    "cn": "本地食物",
+    "en": "Local Food",
+    "link": "local_food.html"
+  },
+  {
+    "cn": "植树造林",
+    "en": "Afforestation",
+    "link": "afforestation.html"
+  },
+  {
+    "cn": "森林保护",
+    "en": "Forest Conservation",
+    "link": "forest_conservation.html"
+  },
+  {
+    "cn": "海洋保护",
+    "en": "Ocean Conservation",
+    "link": "ocean_conservation.html"
+  },
+  {
+    "cn": "湿地保护",
+    "en": "Wetland Conservation",
+    "link": "wetland_conservation.html"
+  },
+  {
+    "cn": "生物多样性",
+    "en": "Biodiversity",
+    "link": "biodiversity.html"
+  },
+  {
+    "cn": "生态修复",
+    "en": "Ecological Restoration",
+    "link": "ecological_restoration.html"
+  },
+  {
+    "cn": "绿色城市",
+    "en": "Green City",
+    "link": "green_city.html"
+  },
+  {
+    "cn": "低碳社区",
+    "en": "Low-carbon Community",
+    "link": "low_carbon_community.html"
+  },
+  {
+    "cn": "海绵城市",
+    "en": "Sponge City",
+    "link": "sponge_city.html"
+  },
+  {
+    "cn": "循环经济",
+    "en": "Circular Economy",
+    "link": "circular_economy.html"
+  },
+  {
+    "cn": "零废弃",
+    "en": "Zero Waste",
+    "link": "zero_waste.html"
+  },
+  {
+    "cn": "绿色制造",
+    "en": "Green Manufacturing",
+    "link": "green_manufacturing.html"
+  },
+  {
+    "cn": "智能电网",
+    "en": "Smart Grid",
+    "link": "smart_grid.html"
+  },
+  {
+    "cn": "气候行动",
+    "en": "Climate Action",
+    "link": "climate_action.html"
+  },
+  {
+    "cn": "环保意识",
+    "en": "Environmental Awareness",
+    "link": "environmental_awareness.html"
+  },
+  {
+    "cn": "绿色创新",
+    "en": "Green Innovation",
+    "link": "green_innovation.html"
+  },
+  {
+    "cn": "青年环保",
+    "en": "Youth Environmental Action",
+    "link": "youth_environment.html"
+  }
+];
+        
+        // 全局变量
+        const wordCanvas = document.getElementById('word-canvas');
+        const particlesCanvas = document.getElementById('particles-canvas');
+        const wordCtx = wordCanvas.getContext('2d');
+        const particlesCtx = particlesCanvas.getContext('2d');
+        const tooltip = document.getElementById('tooltip');
+        
+        let width, height;
+        let words = [];
+        let animationId;
+        let autoRotate = true;
+        let rotationAngle = 0;
+        let mouseX = 0, mouseY = 0;
+        let isDragging = false;
+        let lastMouseX = 0, lastMouseY = 0;
+        let scale = 1;
+        let offsetX = 0, offsetY = 0;
+        let currentTheme = 0;
+        let lastTap = 0;
+        
+        // 主题配置 - 浅色主题
+        const themes = [
+            { primary: '#1a73e8', secondary: '#34a853', text: '#333' },
+            { primary: '#00bcd4', secondary: '#4caf50', text: '#333' },
+            { primary: '#ff9800', secondary: '#e91e63', text: '#333' },
+            { primary: '#9c27b0', secondary: '#2196f3', text: '#333' }
+        ];
+        
+        // 初始化
+        function init() {
+            resize();
+            createParticles();
+            createWords();
+            setupEventListeners();
+            updateStats();
+            hideLoading();
+            animate(0);
+        }
+        
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            wordCanvas.width = width;
+            wordCanvas.height = height;
+            particlesCanvas.width = width;
+            particlesCanvas.height = height;
+        }
+        
+        function createParticles() {
+            particles = [];
+            for (let i = 0; i < 150; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 3 + 1,
+                    speedX: (Math.random() - 0.5) * 0.2,
+                    speedY: (Math.random() - 0.5) * 0.2,
+                    opacity: Math.random() * 0.4 + 0.2
+                });
+            }
+        }
+        
+        function createWords() {
+            words = wordData.map((item, index) => {
+                const angle = (index / wordData.length) * Math.PI * 2;
+                const radius = Math.random() * Math.min(width, height) * 0.25 + Math.min(width, height) * 0.1;
+                return {
+                    ...item,
+                    x: Math.cos(angle) * radius,
+                    y: Math.sin(angle) * radius,
+                    z: Math.random() * 2 - 1,
+                    size: Math.random() * 14 + 10,
+                    angle: angle,
+                    radius: radius,
+                    rotation: Math.random() * 360,
+                    speed: (Math.random() - 0.5) * 0.15,
+                    baseOpacity: Math.random() * 0.5 + 0.5,
+                    pulse: Math.random() * Math.PI * 2,
+                    hoverScale: 1
+                };
+            });
+            document.getElementById('word-count').textContent = words.length;
+        }
+        
+        function setupEventListeners() {
+            window.addEventListener('resize', () => {
+                resize();
+                createParticles();
+                createWords();
+            });
+            
+            wordCanvas.addEventListener('mousemove', handleMouseMove);
+            wordCanvas.addEventListener('mousedown', handleMouseDown);
+            wordCanvas.addEventListener('mouseup', handleMouseUp);
+            wordCanvas.addEventListener('wheel', handleWheel);
+            wordCanvas.addEventListener('click', handleClick);
+            
+            // 触摸事件支持
+            wordCanvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+            wordCanvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+            wordCanvas.addEventListener('touchend', handleTouchEnd, { passive: false });
+        }
+        
+        function handleMouseMove(e) {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            if (isDragging) {
+                const deltaX = e.clientX - lastMouseX;
+                const deltaY = e.clientY - lastMouseY;
+                offsetX += deltaX * 0.5;
+                offsetY += deltaY * 0.5;
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+            }
+            
+            checkWordHover();
+        }
+        
+        function handleMouseDown(e) {
+            isDragging = true;
+            lastMouseX = e.clientX;
+            lastMouseY = e.clientY;
+        }
+        
+        function handleMouseUp() {
+            isDragging = false;
+        }
+        
+        function handleWheel(e) {
+            e.preventDefault();
+            scale += e.deltaY * -0.001;
+            scale = Math.max(0.5, Math.min(3, scale));
+        }
+        
+        function handleClick(e) {
+            const word = findClickedWord(e.clientX, e.clientY);
+            if (word) {
+                window.location.href = word.link;
+            }
+        }
+        
+        function handleTouchMove(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            mouseX = touch.clientX;
+            mouseY = touch.clientY;
+            
+            if (e.touches.length === 2) {
+                // 双指缩放
+                const currentDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                if (window.lastPinchDistance) {
+                    const delta = currentDistance - window.lastPinchDistance;
+                    scale += delta * 0.01;
+                    scale = Math.max(0.5, Math.min(3, scale));
+                }
+                window.lastPinchDistance = currentDistance;
+            } else if (isDragging) {
+                const deltaX = touch.clientX - lastMouseX;
+                const deltaY = touch.clientY - lastMouseY;
+                offsetX += deltaX * 0.5;
+                offsetY += deltaY * 0.5;
+            }
+            lastMouseX = touch.clientX;
+            lastMouseY = touch.clientY;
+            
+            checkWordHover();
+        }
+        
+        function handleTouchStart(e) {
+            if (e.touches.length === 1) {
+                isDragging = true;
+                lastMouseX = e.touches[0].clientX;
+                lastMouseY = e.touches[0].clientY;
+                window.lastPinchDistance = null;
+            }
+        }
+        
+        function handleTouchEnd(e) {
+            isDragging = false;
+            window.lastPinchDistance = null;
+            
+            // 检测双击
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            if (tapLength < 300 && tapLength > 0) {
+                // 双击重置
+                resetView();
+                e.preventDefault();
+            }
+            lastTap = currentTime;
+            
+            // 检测点击
+            if (e.changedTouches.length === 1) {
+                const touch = e.changedTouches[0];
+                const word = findClickedWord(touch.clientX, touch.clientY);
+                if (word) {
+                    window.location.href = word.link;
+                }
+            }
+        }
+        
+        function findClickedWord(mouseX, mouseY) {
+            const centerX = width / 2 + offsetX;
+            const centerY = height / 2 + offsetY;
+            
+            for (let word of words) {
+                const x = centerX + (word.x * Math.cos(rotationAngle) - word.y * Math.sin(rotationAngle)) * scale;
+                const y = centerY + (word.x * Math.sin(rotationAngle) + word.y * Math.cos(rotationAngle)) * scale;
+                
+                const measure = wordCtx.measureText(word.cn);
+                const wordWidth = measure.width * word.hoverScale;
+                const wordHeight = word.size * word.hoverScale;
+                
+                if (mouseX >= x - wordWidth / 2 && mouseX <= x + wordWidth / 2 &&
+                    mouseY >= y - wordHeight / 2 && mouseY <= y + wordHeight / 2) {
+                    return word;
+                }
+            }
+            return null;
+        }
+        
+        function checkWordHover() {
+            const word = findClickedWord(mouseX, mouseY);
+            if (word) {
+                document.getElementById('tooltip-cn').textContent = word.cn;
+                document.getElementById('tooltip-en').textContent = word.en;
+                document.getElementById('tooltip-link').href = word.link;
+                
+                let tooltipX = mouseX + 15;
+                let tooltipY = mouseY + 15;
+                
+                // 确保提示框不超出屏幕
+                if (tooltipX + 280 > width) {
+                    tooltipX = width - 290;
+                }
+                if (tooltipY + 150 > height) {
+                    tooltipY = height - 160;
+                }
+                
+                tooltip.style.left = tooltipX + 'px';
+                tooltip.style.top = tooltipY + 'px';
+                tooltip.classList.add('visible');
+                
+                word.hoverScale = 1.15;
+            } else {
+                tooltip.classList.remove('visible');
+                words.forEach(w => w.hoverScale = 1);
+            }
+        }
+        
+        function updateParticles() {
+            particlesCtx.clearRect(0, 0, width, height);
+            
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                
+                if (p.x < 0) p.x = width;
+                if (p.x > width) p.x = 0;
+                if (p.y < 0) p.y = height;
+                if (p.y > height) p.y = 0;
+                
+                const theme = themes[currentTheme];
+                particlesCtx.beginPath();
+                particlesCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                particlesCtx.fillStyle = theme.primary;
+                particlesCtx.globalAlpha = p.opacity;
+                particlesCtx.fill();
+                particlesCtx.globalAlpha = 1;
+            });
+        }
+        
+        function updateWords(time) {
+            wordCtx.clearRect(0, 0, width, height);
+            
+            const centerX = width / 2 + offsetX;
+            const centerY = height / 2 + offsetY;
+            const theme = themes[currentTheme];
+            
+            words.forEach(word => {
+                if (autoRotate) {
+                    word.angle += word.speed * 0.01;
+                }
+                
+                word.pulse += 0.04;
+                const pulseScale = 1 + Math.sin(word.pulse) * 0.03;
+                const currentScale = word.hoverScale * pulseScale;
+                
+                const x = centerX + (word.x * Math.cos(rotationAngle) - word.y * Math.sin(rotationAngle)) * scale;
+                const y = centerY + (word.x * Math.sin(rotationAngle) + word.y * Math.cos(rotationAngle)) * scale;
+                
+                const rotatedX = word.x * Math.cos(rotationAngle) - word.y * Math.sin(rotationAngle);
+                const rotatedY = word.x * Math.sin(rotationAngle) + word.y * Math.cos(rotationAngle);
+                const z = Math.sin(rotatedX * 0.015 + time * 0.0008) * 0.5 + 0.5;
+                
+                const baseOpacity = word.baseOpacity * (0.6 + z * 0.4);
+                
+                const gradient = wordCtx.createLinearGradient(
+                    x - word.size * 1.5, y,
+                    x + word.size * 1.5, y
+                );
+                gradient.addColorStop(0, theme.primary);
+                gradient.addColorStop(1, theme.secondary);
+                
+                wordCtx.font = `bold ${word.size * currentScale * (0.85 + z * 0.3)}px "Microsoft YaHei", sans-serif`;
+                wordCtx.textAlign = 'center';
+                wordCtx.textBaseline = 'middle';
+                
+                wordCtx.shadowColor = theme.primary;
+                wordCtx.shadowBlur = 15 * z + 8;
+                wordCtx.fillStyle = gradient;
+                wordCtx.globalAlpha = baseOpacity;
+                wordCtx.fillText(word.cn, x, y);
+                wordCtx.globalAlpha = 1;
+                wordCtx.shadowBlur = 0;
+            });
+        }
+        
+        function animate(time) {
+            if (autoRotate) {
+                rotationAngle += 0.001;
+            }
+            
+            updateParticles();
+            updateWords(time);
+            
+            animationId = requestAnimationFrame(animate);
+        }
+        
+        function updateStats() {
+            document.getElementById('word-count').textContent = words.length;
+        }
+        
+        function hideLoading() {
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+            }, 800);
+        }
+        
+        function toggleRotation() {
+            autoRotate = !autoRotate;
+        }
+        
+        function changeTheme() {
+            currentTheme = (currentTheme + 1) % themes.length;
+        }
+        
+        function zoomIn() {
+            scale = Math.min(scale * 1.2, 3);
+            autoRotate = false;
+        }
+        
+        function zoomOut() {
+            scale = Math.max(scale / 1.2, 0.3);
+            autoRotate = false;
+        }
+        
+        function resetView() {
+            scale = 1;
+            offsetX = 0;
+            offsetY = 0;
+            rotationAngle = 0;
+            autoRotate = true;
+        }
+        
+        // 启动
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
