@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科学幻想海报-南开小学-7jul</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../class_advisor_styles.css">
+    <style>
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .gallery-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .gallery-item a {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .gallery-item .caption {
+            padding: 12px;
+            text-align: center;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .back-link {
+            display: inline-block;
+            margin: 15px 0;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #1a73e8 0%, #34a853 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.4);
+        }
+        .back-link:hover {
+            opacity: 0.9;
+        }
+        .workflow-note {
+            text-align: center;
+            color: #666;
+            margin: 15px auto;
+            max-width: 700px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.95em;
+        }
+        .workflow-note code {
+            background: #e8eaed;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #d93025;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>科学幻想海报——学生作文×AI科幻场景</h1>
+        <a href="../index.html" class="back-link">← 返回首页</a>
+        <p class="workflow-note">
+            本项目采用「<b>作文稿纸 + 科幻大屏幕</b>」1:2版面比例。学生先完成作文拍摄清晰照片，
+            再由 AIO2turbo 工作流生成科幻背景图，按比例合成后通过 Qwen 图片编辑，将上方改造为充满科幻元素的幻想大屏幕，
+            整体效果如同作文里的想象通过投影仪投射到大屏幕上并突破边界。
+        </p>
+    </div>
+
+    <br>
+
+    <div class="container">
+        <h1>学生作品展示</h1>
+        <p class="workflow-note">
+            点击图片可查看大图。作品按学生姓名排列，欢迎欣赏孩子们的奇思妙想！
+        </p>
+        <div class="gallery">
+            <div class="gallery-item">
+                <a href="刘琪梦.png"><img src="刘琪梦.png" alt="刘琪梦"></a>
+                <div class="caption">刘琪梦 · 京剧科幻秀</div>
+            </div>
+            <div class="gallery-item">
+                <a href="吴俊锡.png"><img src="吴俊锡.png" alt="吴俊锡"></a>
+                <div class="caption">吴俊锡 · 火星漫步</div>
+            </div>
+            <div class="gallery-item">
+                <a href="张译嘉.png"><img src="张译嘉.png" alt="张译嘉"></a>
+                <div class="caption">张译嘉 · 穿越大唐盛世</div>
+            </div>
+            <div class="gallery-item">
+                <a href="徐睿晗.png"><img src="徐睿晗.png" alt="徐睿晗"></a>
+                <div class="caption">徐睿晗</div>
+            </div>
+            <div class="gallery-item">
+                <a href="朱冠颖.png"><img src="朱冠颖.png" alt="朱冠颖"></a>
+                <div class="caption">朱冠颖</div>
+            </div>
+            <div class="gallery-item">
+                <a href="欧阳.png"><img src="欧阳.png" alt="欧阳"></a>
+                <div class="caption">欧阳</div>
+            </div>
+            <div class="gallery-item">
+                <a href="江思璇.png"><img src="江思璇.png" alt="江思璇"></a>
+                <div class="caption">江思璇</div>
+            </div>
+            <div class="gallery-item">
+                <a href="测试虚拟实景教室.png"><img src="测试虚拟实景教室.png" alt="虚拟实景教室"></a>
+                <div class="caption">虚拟实景教室（测试版）</div>
+            </div>
+            <div class="gallery-item">
+                <a href="海报_碳中和纳米涂层油漆.png"><img src="海报_碳中和纳米涂层油漆.png" alt="碳中和纳米涂层油漆"></a>
+                <div class="caption">碳中和纳米涂层油漆</div>
+            </div>
+            <div class="gallery-item">
+                <a href="焦弘毅.png"><img src="焦弘毅.png" alt="焦弘毅"></a>
+                <div class="caption">焦弘毅</div>
+            </div>
+            <div class="gallery-item">
+                <a href="焦弘毅 (2).png"><img src="焦弘毅 (2).png" alt="焦弘毅 2"></a>
+                <div class="caption">焦弘毅 · 第二版</div>
+            </div>
+            <div class="gallery-item">
+                <a href="王允熙.png"><img src="王允熙.png" alt="王允熙"></a>
+                <div class="caption">王允熙</div>
+            </div>
+            <div class="gallery-item">
+                <a href="王忻宁.png"><img src="王忻宁.png" alt="王忻宁"></a>
+                <div class="caption">王忻宁</div>
+            </div>
+            <div class="gallery-item">
+                <a href="郑天睿.png"><img src="郑天睿.png" alt="郑天睿"></a>
+                <div class="caption">郑天睿</div>
+            </div>
+            <div class="gallery-item">
+                <a href="郑怀杨.png"><img src="郑怀杨.png" alt="郑怀杨"></a>
+                <div class="caption">郑怀杨</div>
+            </div>
+            <div class="gallery-item">
+                <a href="陈冠豪.png"><img src="陈冠豪.png" alt="陈冠豪"></a>
+                <div class="caption">陈冠豪</div>
+            </div>
+            <div class="gallery-item">
+                <a href="高仁.png"><img src="高仁.png" alt="高仁"></a>
+                <div class="caption">高仁</div>
+            </div>
+            <div class="gallery-item">
+                <a href="高骏成.png"><img src="高骏成.png" alt="高骏成"></a>
+                <div class="caption">高骏成</div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="container">
+        <h1>工作流说明</h1>
+        <p class="workflow-note">
+            <b>① 准备素材：</b>学生作文清晰照片 + AIO2turbo 工作流生成科幻背景图（seed=33333 邮轮图）<br>
+            <b>② 合成底图：</b>Python 脚本将作文与背景按 1:2 比例合成，上传至 ComfyUI<br>
+            <b>③ Qwen 图片编辑：</b>使用最终版提示词，将画面上方改造成科幻大屏幕效果<br>
+            <b>④ 输出海报：</b>整体如同作文想象通过投影仪投射到大屏幕并突破边界
+        </p>
+        <p class="workflow-note">
+            <b>最终版提示词：</b><br>
+            <code>保持画面下方学生作文纸的清晰可读，格子线和手写文字都清晰可见，将画面上方区域改造成充满科幻元素的幻想大屏幕，屏幕上有学生想象中科幻场景包括巨大的豪华邮轮、科幻飞船、星空、幻想城市、海底世界等，科幻邮轮从屏幕中突破边框驶出画面极具视觉冲击力，屏幕边框有淡淡的科技感光效，画面从作文纸向上有淡蓝色的投影光线呈扇形放射状散开照亮屏幕，光线要柔和淡雅不刺眼</code>
+        </p>
+    </div>
+
+    <div class="copyright">
+        @天津市南开区南开小学-7jul
+    </div>
+</body>
+</html>
