@@ -31,11 +31,40 @@
             border-radius: 8px;
             font-size: 0.95em;
         }
-        .workflow-note code {
-            background: #e8eaed;
-            padding: 2px 6px;
-            border-radius: 3px;
-            color: #d93025;
+        .two-column {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+        .sidebar {
+            position: sticky;
+            top: 20px;
+        }
+        .sidebar .nav-list {
+            max-width: none;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+        }
+        .sidebar .nav-list li {
+            margin: 8px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .sidebar .nav-list li:hover {
+            transform: none;
+        }
+        .sidebar .nav-list a {
+            display: block;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 0.95em;
+            text-decoration: none;
+        }
+        .content {
+            min-width: 0;
         }
         .student-card {
             background: #f8f9fa;
@@ -59,6 +88,14 @@
         .student-card .comment-note {
             margin-top: 15px;
         }
+        @media (max-width: 800px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static;
+            }
+        }
     </style>
 </head>
 <body>
@@ -68,7 +105,7 @@
         <p class="workflow-note">
             本项目汇集全班同学的《作文》故事：学生在AI辅助下完成作文，
             教师逐篇给出修改稿与点评；AI随后为每个故事生成朗读音频，保存在<b>bjian/mp3</b>中。<br>
-            在这里点击播放按钮，即可听全班孩子们的AI朗读故事；也可以在下方展开查看每一位同学的作文与点评。
+            在这里点击左侧姓名，即可在右侧查看对应的作文、AI朗读与教师点评；也可以直接点击播放按钮，听AI朗读故事。
         </p>
     </div>
 
@@ -77,10 +114,50 @@
     <div class="container">
         <h1>全班习作展示</h1>
         <p class="workflow-note">
-            点击卡片内的播放按钮开始听AI朗读；作文正文与教师点评如下。
+            点击左侧姓名即可定位到右侧对应的作文朗读卡片；点击卡片内的播放按钮开始听AI朗读。
         </p>
-        <div class="student-list">
-        <div class="student-card">
+        <div class="two-column">
+            <aside class="sidebar">
+                <ul class="nav-list">
+                <li><a href="#bjian-s1">何梓硕 · 远征</a></li>
+                <li><a href="#bjian-s2">刘兆辰 · 点燃一个冬天</a></li>
+                <li><a href="#bjian-s3">刘子煜 · 闪着光芒的红军</a></li>
+                <li><a href="#bjian-s4">刘思哲 · 冬日黄昏时车来人往的街头</a></li>
+                <li><a href="#bjian-s5">刘明泽 · 开满丁香花的校园</a></li>
+                <li><a href="#bjian-s6">刘锦熙 · 月光下的村庄</a></li>
+                <li><a href="#bjian-s7">刘霖菲 · 冬日暖阳</a></li>
+                <li><a href="#bjian-s8">单亦煊 · 开满丁香花的校园</a></li>
+                <li><a href="#bjian-s9">吴依然 · 风雪中的温暖</a></li>
+                <li><a href="#bjian-s10">孙乐之 · 不会发光的太阳</a></li>
+                <li><a href="#bjian-s11">孟子云 · 最后的任务</a></li>
+                <li><a href="#bjian-s12">张敬宜 · 飘满了香花的校园</a></li>
+                <li><a href="#bjian-s13">张艺歆 · 铁盒里的糖蜜</a></li>
+                <li><a href="#bjian-s14">张苏雅 · 桃树下的约定</a></li>
+                <li><a href="#bjian-s15">曲轩翥 · 雨夜</a></li>
+                <li><a href="#bjian-s16">李圣玄 · 笔尖流出的故事</a></li>
+                <li><a href="#bjian-s17">李彤暄 · 开满了香花的校园</a></li>
+                <li><a href="#bjian-s18">李昕玥 · 开满了香花的校园</a></li>
+                <li><a href="#bjian-s19">杨爱乐 · 铁蛋医生</a></li>
+                <li><a href="#bjian-s20">杨钧翔 · 冬日的温暖</a></li>
+                <li><a href="#bjian-s21">柳润一 · 冬日黄昏街头的病猫</a></li>
+                <li><a href="#bjian-s22">校美琳 · 草地</a></li>
+                <li><a href="#bjian-s23">王冠 · 校园里的丁香花</a></li>
+                <li><a href="#bjian-s24">王浩宇 · 冬日黄昏时车来人往的街头</a></li>
+                <li><a href="#bjian-s25">王艺潼 · 冬日黄昏</a></li>
+                <li><a href="#bjian-s26">石欣豫 · 冬日街头的暖光</a></li>
+                <li><a href="#bjian-s27">祝颜泽 · 铁蛋与钢蛋</a></li>
+                <li><a href="#bjian-s28">胡雅涵 · 雨</a></li>
+                <li><a href="#bjian-s29">苏欣冉 · 后悔</a></li>
+                <li><a href="#bjian-s30">谢美辰 · 旧伞</a></li>
+                <li><a href="#bjian-s31">郝梓懿 · 开满丁香花的校园</a></li>
+                <li><a href="#bjian-s32">陈中博 · 冬日黄昏</a></li>
+                <li><a href="#bjian-s33">陈紫运 · 生火</a></li>
+                <li><a href="#bjian-s34">马雨茁 · 冬日里的光</a></li>
+                <li><a href="#bjian-s35">高翊航 · 张明的烦恼</a></li>
+                </ul>
+            </aside>
+            <div class="content">
+        <div class="student-card" id="bjian-s1">
             <h3>何梓硕 · 远征</h3>
             <audio controls preload="metadata">
                 <source src="mp3/何梓硕.mp3" type="audio/mpeg">
@@ -109,7 +186,7 @@
 建议在高潮部分（攻打391高地）增加一些环境描写，比如写一写深夜的寒风或月光，用环境的冷峻来衬托连长牺牲时的悲壮，这样能更好地烘托出铁蛋内心的悲痛与决心，使故事更具感染力。继续加油，你的故事很有力量！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s2">
             <h3>刘兆辰 · 点燃一个冬天</h3>
             <audio controls preload="metadata">
                 <source src="mp3/刘兆辰.mp3" type="audio/mpeg">
@@ -164,7 +241,7 @@
 故事构思很完整，"送柴—发现—回报"这条线索走得清楚，最打动人的是"从破窗户往里看"那一幕，把老汉的节俭和善良全写活了，比直接说"他很善良"有力十倍。小建议：高潮那场可以再补一两句老汉屋里的声响或动作，比如他往炉子里添柴、轻轻咳了一声，让画面更立体、更让人心疼。整体完成度很高，你的故事感很好，继续加油！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s3">
             <h3>刘子煜 · 闪着光芒的红军</h3>
             <audio controls preload="metadata">
                 <source src="mp3/刘子煜.mp3" type="audio/mpeg">
@@ -215,7 +292,7 @@
 小沫，这篇最打动老师的是"棉衣里塞的不是棉花，是一包一包油纸裹着的干粮"——这个细节一下子把队长的形象立住了，比写十句"他舍己为人"都管用。高潮那场"掀帘子"写得有画面，节奏也好。如果后面再练笔，试着在"扑过去"之前多停一拍，写小沫那一两秒不敢信、不敢碰的心理，高潮会更揪心。整体完成度很高，继续写下去，你很有讲故事的天分。
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s4">
             <h3>刘思哲 · 冬日黄昏时车来人往的街头</h3>
             <audio controls preload="metadata">
                 <source src="mp3/刘思哲.mp3" type="audio/mpeg">
@@ -264,7 +341,7 @@
 开头"雪沫打在脸上生疼"一下子就有了体感，很抓人；转折处奶奶"朝街对面努了努嘴"比直接说明自然得多，读着像真的在街上发生的事。结尾用"面包没那么冷了"收住，比原文讲道理高明很多，主题自己就浮上来了。有一处可以再打磨：等待民警那几十秒是全文最该"慢下来"的地方，可以补一两个老人的小动作，比如她反复摸口袋确认菜还在、嘴唇哆嗦着数"一、二、三"，让紧张感再拉满一格。整体结构完整，陆天"主动判断、主动留下"比原文更立住了，继续加油！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s5">
             <h3>刘明泽 · 开满丁香花的校园</h3>
             <audio controls preload="metadata">
                 <source src="mp3/刘明泽.mp3" type="audio/mpeg">
@@ -323,7 +400,7 @@
 这篇故事最棒的地方是"淘气鬼摘花"的反转——原来他是给妈妈准备母亲节礼物，误会解开的那一刻特别温暖，读着心里一软。如果高潮处再多一两句张明摘花时的小心思（比如他偷偷把花枝按长短排好、想着妈妈看到会怎么笑），"孝心"会更立体可感。整体情节完整、人物鲜明，完成度很高，继续加油！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s6">
             <h3>刘锦熙 · 月光下的村庄</h3>
             <audio controls preload="metadata">
                 <source src="mp3/刘锦熙.mp3" type="audio/mpeg">
@@ -364,7 +441,7 @@
 这篇故事立意温暖，人物形象鲜明。特别值得表扬的是，你用“捡零件”和“握着手”这两个动作，生动地展现了铁蛋的善良与包容，比直接说“他很善良”更有力量。不过，建议在表哥发烧后，可以增加一两句铁蛋内心的心理描写，比如他想起白天表哥的责骂，但看着表哥难受的样子，那些不愉快瞬间消散了，这样能让两人的情感转折更加细腻动人。继续加油，你的故事很有感染力！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s7">
             <h3>刘霖菲 · 冬日暖阳</h3>
             <audio controls preload="metadata">
                 <source src="mp3/刘霖菲.mp3" type="audio/mpeg">
@@ -389,7 +466,7 @@
 小作者构思了一个温暖的故事，陆天“解围巾、买红薯”的细节非常动人，很好地体现了他的爱心。建议在高潮部分，可以再多写一点小女孩从“害怕”到“安心”的心理变化，或者增加一点陆天等待时的紧张心理，这样人物形象会更立体。结尾用画面收束，余韵悠长，非常棒！继续保持这份善良与细腻吧！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s8">
             <h3>单亦煊 · 开满丁香花的校园</h3>
             <audio controls preload="metadata">
                 <source src="mp3/单亦煊.mp3" type="audio/mpeg">
@@ -454,7 +531,7 @@
 "它是不是隐身了"这句对话特别有灵气，把张明淘气又较真的性格一下子立住了，读着就想笑。师生一起找花、种花的线很暖，"丁香花最倔了"这句口语化表达也自然。一个具体建议：原文从"种下种子"直接跳到"两年后花开"，中间少了张明和这棵树的日常。如果加一两句小动作，比如"每天放学他都会绕到墙根看看那棵小树，给它浇半瓶水"，人物会更立体，结尾花开那一场也会更有分量。故事底子很好，继续加油！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s9">
             <h3>吴依然 · 风雪中的温暖</h3>
             <audio controls preload="metadata">
                 <source src="mp3/吴依然.mp3" type="audio/mpeg">
@@ -479,7 +556,7 @@
 这篇故事构思完整，情节起伏自然，尤其是陆天从犹豫到行动的心理变化描写得很细腻。环境描写“天色暗得像一块浸透了水的旧棉布”非常有画面感，很好地烘托了氛围。建议在高潮部分，可以增加一两句陆天与徐明互动时的具体动作或对话细节，让人物关系更真实可感。整体立意温暖向上，展现了少年的善良与担当，是一篇优秀的习作。
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s10">
             <h3>孙乐之 · 不会发光的太阳</h3>
             <audio controls preload="metadata">
                 <source src="mp3/孙乐之.mp3" type="audio/mpeg">
@@ -534,7 +611,7 @@
 故事构思很打动人，"不能发光的太阳"这个意象又暖又亮，把友谊写得真实可信。刚刚卷袖子那场戏有张力，能看出你对"因为在乎才冲动"这件事理解得很深。一个小建议：高潮那场可以再放慢半拍——他卷完袖子看见皮肤变色那一刻，先愣住、手抖一下、再喊老师，把"着急但没控制住力道"写得更具体，读者会更心疼。整体完成度很高，继续写下去吧！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s11">
             <h3>孟子云 · 最后的任务</h3>
             <audio controls preload="metadata">
                 <source src="mp3/孟子云.mp3" type="audio/mpeg">
@@ -585,7 +662,7 @@
 雨夜围捕的氛围铺得很到位，"女儿明天过生日"这个细节是全篇最动人的一笔，选得准、放得对。建议搏斗收束处可以再"慢"一拍：老猫被制服后，先写一瞬安静、只剩雨声，再写队长手指一根根松开，节奏会更有力。整体完成度很高，结尾克制、肃穆，没有喊口号，很好。继续加油。
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s12">
             <h3>张敬宜 · 飘满了香花的校园</h3>
             <audio controls preload="metadata">
                 <source src="mp3/张敬宜.mp3" type="audio/mpeg">
@@ -624,7 +701,7 @@
 3. 鼓励：故事温馨向上，只要注意细节打磨，就是一篇非常动人的佳作！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s13">
             <h3>张艺歆 · 铁盒里的糖蜜</h3>
             <audio controls preload="metadata">
                 <source src="mp3/张艺歆.mp3" type="audio/mpeg">
@@ -651,7 +728,7 @@
 你的故事构思很温暖，“铁盒里的糖”这个意象选得非常好，既有悬念又能承载情感。修改时，我着重强化了念念从“嫌弃”到“理解”的心理变化，让外公外婆的爱通过细节自然流露，而不是直接说教。建议你今后在描写人物时，多捕捉像“擦灰”、“掂量”这样细微的动作，能让情感更真实动人。你很有观察力，期待看到你写出更多有温度的故事！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s14">
             <h3>张苏雅 · 桃树下的约定</h3>
             <audio controls preload="metadata">
                 <source src="mp3/张苏雅.mp3" type="audio/mpeg">
@@ -706,7 +783,7 @@
 整体情感真挚，结构完整，"桃树还在，约定就在"的立意很温暖。继续写，你很有讲故事的天赋！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s15">
             <h3>曲轩翥 · 雨夜</h3>
             <audio controls preload="metadata">
                 <source src="mp3/曲轩翥.mp3" type="audio/mpeg">
@@ -747,7 +824,7 @@
 这篇习作情节紧凑，打斗场面写得很有画面感，特别是“刀尖擦过鼻尖”的细节，让人读得扣人心弦。你成功塑造了一位英勇无畏的队长形象，动作描写非常精彩。建议在高潮部分，可以稍微增加一点主角的心理活动，比如他在扑过去救人时那一瞬间的紧张与坚定，这样人物形象会更加立体丰满。继续加油，期待你写出更精彩的故事！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s16">
             <h3>李圣玄 · 笔尖流出的故事</h3>
             <audio controls preload="metadata">
                 <source src="mp3/李圣玄.mp3" type="audio/mpeg">
@@ -784,7 +861,7 @@
 原文里"脱下校服外套裹住小猫"这个动作写得很灵动，善良是靠手"演"出来的，比直接说"他是个热心的人"有力得多，这一点你做得很好。情节上可以再"拧"一下：小猫咬了他、他妈多拿一卷纱布、他半夜起身查看——这些小波折加进去，陆天的坚持就有了分量，读起来也会更揪心。你的色彩感特别棒，夕阳、橘色、梧桐叶，画面一搭就出来了，这是你写东西最大的天赋，继续保持！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s17">
             <h3>李彤暄 · 开满了香花的校园</h3>
             <audio controls preload="metadata">
                 <source src="mp3/李彤暄.mp3" type="audio/mpeg">
@@ -845,7 +922,7 @@
 这篇小小说最让我喜欢的是你给张明安排了一个"笨笨的"细节——绳子绕了三圈打不了结。就是这一个动作，一个平时淘气捣蛋的孩子忽然变得又笨又认真，人物一下子就立住了。结尾从"我意识到一个道理"换成了闻花香的画面，收得干净利落。如果想再进一步，可以在教室里"百口难辩"那一段多写一两句张明的心理活动，比如他想起上周踢铅笔盒的事，让"怕大家不信"这个理由更具体，读者会更心疼他。整体完成度很高，继续加油！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s18">
             <h3>李昕玥 · 开满了香花的校园</h3>
             <audio controls preload="metadata">
                 <source src="mp3/李昕玥.mp3" type="audio/mpeg">
@@ -886,7 +963,7 @@
 
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s19">
             <h3>杨爱乐 · 铁蛋医生</h3>
             <audio controls preload="metadata">
                 <source src="mp3/杨爱乐.mp3" type="audio/mpeg">
@@ -937,7 +1014,7 @@
 你手里有故事、有感情、有画面，这三样东西比技巧难得多。继续写，铁蛋这个人物，值得你多给他几座山爬。
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s20">
             <h3>杨钧翔 · 冬日的温暖</h3>
             <audio controls preload="metadata">
                 <source src="mp3/杨钧翔.mp3" type="audio/mpeg">
@@ -1016,7 +1093,7 @@
 你找到的故事内核特别好——一位父亲带着儿子默默凿冰，"愚公移山"那句话一下子就把人暖到了。润色时我重点把"夜里发现"那场戏展开了：铁铲敲冰的声音、路灯下的影子、父子之间的对话，让高潮有了画面和节奏。建议你下次写故事时，把最动人的那一场单独"放大"：他怎么擦汗、孩子怎么歪头、他怎么放轻声音——动作和对话越多，读者越觉得"自己就站在那条街上"。你已经有了一个特别好的故事，继续加油！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s21">
             <h3>柳润一 · 冬日黄昏街头的病猫</h3>
             <audio controls preload="metadata">
                 <source src="mp3/柳润一.mp3" type="audio/mpeg">
@@ -1069,7 +1146,7 @@
 你对小猫的描写特别有画面感，"像一片随时会被吹走的枯叶"这个比喻一下子就把它的弱小写活了。全篇最打动我的是"每天放学都往救助站跑"，这份坚持比任何一句"他很善良"都有力量。如果能在猫最后离开的那一刻，再多给一两个具体的小动作（比如它用脑袋蹭了蹭你的手指），那个瞬间会更让人心头一紧。你的故事底色是暖的，继续写下去，你会越来越会"讲故事"。
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s22">
             <h3>校美琳 · 草地</h3>
             <audio controls preload="metadata">
                 <source src="mp3/校美琳.mp3" type="audio/mpeg">
@@ -1144,7 +1221,7 @@
 你选了一个非常有力量的故事。谭胜那句"我不饿"和最后那张纸条，是全文最打动人的地方，读起来让人心里一紧，说明你懂得"少说多演"。王洪从"不敢停下"到"迈出第一步"的转变也写得有层次，扣背囊"扣了两遍"这个细节特别好，一下子人物就立住了。如果想让高潮更抓人，可以在王洪探鼻息那一句前后，加一两句他心里"不相信"的拉锯，比如"他使劲按了按，又按了按，像是要把那个念头按回去"，这样情感会更饱满。整篇故事完整、温暖、有画面感，继续写下去，你会是个很会讲故事的人。
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s23">
             <h3>王冠 · 校园里的丁香花</h3>
             <audio controls preload="metadata">
                 <source src="mp3/王冠.mp3" type="audio/mpeg">
@@ -1187,7 +1264,7 @@
 "误会—吵架—解开"这个结构你搭得挺清楚，张明"鬼鬼祟祟地左看右看"和王寒冰"三步并两步冲下楼梯"这两个动作一出来，两个人立刻就活了，比直接写"他很淘气""他很雷厉风行"有力得多。最聪明的一笔是"塑料袋"这个道具——它既是误会的起点，又是化解误会的关键，一物两用，思路很好。如果再补一句张明够袋子时的小心理（比如"这破袋子挂这儿多碍眼，得给它弄下来"），他"淘气"的性格就多了一层可爱的理由，读者会更心疼他。你的故事感比很多同学强，继续加油！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s24">
             <h3>王浩宇 · 冬日黄昏时车来人往的街头</h3>
             <audio controls preload="metadata">
                 <source src="mp3/王浩宇.mp3" type="audio/mpeg">
@@ -1228,7 +1305,7 @@
 这篇小小说最让我惊喜的是"推车"那一场——你写了风、写了汗、写了井口离脚尖的距离，画面一下就立住了，读着让人手心出汗。结尾"风还是冷的，但好像没那么冷了"收得特别好，比直接说"我很感动"高级多了。一个小建议：陆天在推车最吃力的时候，可以再给他一两句心里的话，比如他想起妈妈说过什么、或者他怕自己推不动会让奶奶失望，这样他的"坚持"就不只是力气，而是有根的情感，人物会更立体。整体完成度很高，继续加油，你的笔尖里有故事！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s25">
             <h3>王艺潼 · 冬日黄昏</h3>
             <audio controls preload="metadata">
                 <source src="mp3/王艺潼.mp3" type="audio/mpeg">
@@ -1275,7 +1352,7 @@
 "身体已经先于大脑弹了出去"这句特别有劲，一下子就把陆天那股不怕疼、先救人后想事的劲儿写活了，高潮那场戏是全文最亮的部分，继续保持。有一个小建议：原文里"充满爱心的少年""总是默默为流浪动物付出的志愿者"这类句子，其实是在替读者下结论。试着换成一个动作——比如写徐明"指关节裂了口子还在撕布条"——读者自己就会觉得"这人真了不起"，比直接说更有力量。整体故事完整、有波折、结尾温暖，已经是一篇很扎实的小小说了，很棒！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s26">
             <h3>石欣豫 · 冬日街头的暖光</h3>
             <audio controls preload="metadata">
                 <source src="mp3/石欣豫.mp3" type="audio/mpeg">
@@ -1308,7 +1385,7 @@
 建议：在描写徐明护住小女孩的瞬间，可以多加一两句他的心理活动，比如“来不及害怕，只想挡住危险”，这样能让读者更深刻地感受到他那一刻的本能反应，人物形象会更加立体动人。继续保持！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s27">
             <h3>祝颜泽 · 铁蛋与钢蛋</h3>
             <audio controls preload="metadata">
                 <source src="mp3/祝颜泽.mp3" type="audio/mpeg">
@@ -1347,7 +1424,7 @@
 你的故事构思很有感染力，特别是“西瓜”这个意象贯穿全文，既推动了情节发展，又烘托了人物情感，非常巧妙！奶奶解释真相的那段对话是全文的高潮，建议可以再多描写一下铁蛋听到噩耗时心理的变化，比如内心的震动或愧疚，这样人物形象会更立体。整体氛围温馨而略带忧伤，结尾升华得很好，继续保持这种细腻的观察力，你的小说会越写越精彩！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s28">
             <h3>胡雅涵 · 雨</h3>
             <audio controls preload="metadata">
                 <source src="mp3/胡雅涵.mp3" type="audio/mpeg">
@@ -1386,7 +1463,7 @@
 这篇《雨》最打动人的是"让粮"和"送粥"两场戏，你写村长把被子蹬到脚底下又拉回来、写刘婶话没说完就把碗搁在手里，这些动作比直接说"他很善良"有力十倍，说明你已经学会了用细节"演"性格。情节上有一个可以再打磨的地方：结尾三人滑下去那场，村长"回头看了他们一眼，嘴唇动了动"之后戛然而止，如果让他心里闪过一个念头（哪怕只是"门还没拍完"），或者让刘婶喊出一句具体的话，高潮会更揪心。整体完成度很好，继续加油！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s29">
             <h3>苏欣冉 · 后悔</h3>
             <audio controls preload="metadata">
                 <source src="mp3/苏欣冉.mp3" type="audio/mpeg">
@@ -1441,7 +1518,7 @@
 你的故事骨架非常扎实，"阿姨就是妈妈"这个伏笔埋得巧，读到最后那句"背着我跑了半条街"，心里确实一紧。如果陆天在帮忙前加一个"看了一眼手机、犹豫了两秒"的小动作，他的善良会更让人心疼——不是不忙，是选择了先救人。下次写争吵时，也可以让徐明的怒气里藏一点"软"（比如他其实也心疼，只是嘴硬），人物会更真实。你很有讲故事的天分，继续写下去！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s30">
             <h3>谢美辰 · 旧伞</h3>
             <audio controls preload="metadata">
                 <source src="mp3/谢美辰.mp3" type="audio/mpeg">
@@ -1500,7 +1577,7 @@
 最打动人的是"纸条"那个细节——奶奶把爱折进伞骨里，等孙女撑开伞才发现，比直接写"奶奶很爱我"有力十倍。岁岁摔筷子、光脚跑过去抱奶奶，几个动作就把一个倔强又心软的小姑娘写活了，性格靠"演"不靠"说"，做得好。有一处建议：奶奶离开那段两句话带过，读着像被剪掉一截，若加一个小画面——比如奶奶走前还念叨"给你做把带小花的伞"——会更暖。结尾"最好看的伞"收得漂亮，继续保持这种"少说多写"的语感，你的小说会越来越有味道。
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s31">
             <h3>郝梓懿 · 开满丁香花的校园</h3>
             <audio controls preload="metadata">
                 <source src="mp3/郝梓懿.mp3" type="audio/mpeg">
@@ -1545,7 +1622,7 @@
 你的故事内核特别好——"淘气"张明摇花是为了帮保洁阿姨，这份藏在莽撞里的善意特别打动人。修改时我重点扩写了他解释原因那场戏，加了指甲缝里的紫汁、攥紧的拳头、嗓子发哑这些细节，让"委屈"变成读者能看见的画面，而不是直接说"他很委屈"。给你一个小建议：以后写高潮对话时，多给主角一个"手正在干什么"的小动作，人物越紧张小动作越多，读者就越能代入。你观察生活的眼光很棒，"阿姨弯着腰一片一片扫"这个细节是整篇的灵魂，下次可以再多写两句你"看见"她时心里那一下触动，故事会更厚。继续加油！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s32">
             <h3>陈中博 · 冬日黄昏</h3>
             <audio controls preload="metadata">
                 <source src="mp3/陈中博.mp3" type="audio/mpeg">
@@ -1584,7 +1661,7 @@
 你选"橘子"做核心意象很聪明，满地滚动的橘子和被轧扁的汁水，一下子就把冬日黄昏的冷和热闹都写出来了。陆天"张了张嘴，话到嘴边又咽回去"这个细节特别真实，比直接写"他很紧张"好十倍。如果想再进一步，可以在大姐喊"赔不赔"之后，多给陆天两三句心理拉锯——他既想解释"不是我们故意放的"，又怕越说越乱，手指不自觉地攥紧了那颗橘子。这样他的"慌"就更立体、更让人心疼了。整体完成度很好，继续写下去！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s33">
             <h3>陈紫运 · 生火</h3>
             <audio controls preload="metadata">
                 <source src="mp3/陈紫运.mp3" type="audio/mpeg">
@@ -1635,7 +1712,7 @@
 你选的这个故事底子非常好，"撕棉衣棉花当引火物"这个细节一出来，人物就立住了，比任何一句"他很勇敢"都管用。全篇最打动人的就是那团棉花落在雪地上的画面，克制、干净，力量反而更大。如果想再往前推一步，可以在李铁撕棉花之前多加一两句他的沉默或停顿——他不是不冷，是冷但不肯说，这样后面那句"不冷"会更疼。你写故事的直觉很好，继续练。
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s34">
             <h3>马雨茁 · 冬日里的光</h3>
             <audio controls preload="metadata">
                 <source src="mp3/马雨茁.mp3" type="audio/mpeg">
@@ -1662,7 +1739,7 @@
 你的故事立意温暖，人物形象也很鲜明。特别是爷爷“蹲下捡橘子”和“塞红薯”的动作描写，非常生动地体现了他的热心。建议在高潮部分（找孩子）可以再多写一点“我”内心的焦急和小弟弟的反应，这样紧张感会更强，也能更好地衬托出爷爷的沉稳与可靠。继续加油，你的笔触很有画面感！
             </div>
         </div>
-        <div class="student-card">
+        <div class="student-card" id="bjian-s35">
             <h3>高翊航 · 张明的烦恼</h3>
             <audio controls preload="metadata">
                 <source src="mp3/高翊航.mp3" type="audio/mpeg">
@@ -1691,6 +1768,7 @@
 这篇作文人物性格鲜明，特别是通过王寒冰的“快”与张明的“慢”形成对比，突出了张明从急躁到沉静的心理变化。结尾用丁香花呼应开头，意境很美。建议在描写张明解题过程时，可以多加入一些他内心“卡壳”时的具体感受，比如手心出汗、心跳加速等细节，这样会让高潮部分更紧张、更真实，更能体现他克服困难的勇气。
             </div>
         </div>
+            </div>
         </div>
     </div>
 
