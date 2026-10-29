@@ -66,6 +66,21 @@
         .content {
             min-width: 0;
         }
+        .stop-audio-btn {
+            display: block;
+            margin: 10px auto 0;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #e53935 0%, #ff7043 100%);
+            color: #fff;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(229, 57, 53, 0.35);
+        }
+        .stop-audio-btn:hover {
+            opacity: 0.9;
+        }
         .student-card {
             background: #f8f9fa;
             border: 1px solid #dee2e6;
@@ -113,6 +128,7 @@
 
     <div class="container">
         <h1>全班习作展示</h1>
+        <button type="button" id="stop-audio-btn" class="stop-audio-btn">停止播放音频</button>
         <p class="workflow-note">
             点击左侧姓名即可显示对应的作文朗读；右侧栏只出现这一篇习作与AI朗读。
         </p>
@@ -1795,6 +1811,16 @@
                     activeCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
+        });
+
+        document.getElementById('stop-audio-btn').addEventListener('click', function() {
+            document.querySelectorAll('audio').forEach(function(audio) {
+                audio.pause();
+                audio.currentTime = 0;
+            });
+            if (window.speechSynthesis) {
+                window.speechSynthesis.cancel();
+            }
         });
     </script>
 </body>
